@@ -75,6 +75,24 @@ button,input{font:inherit;color:inherit}button{background:none;border:0;cursor:p
 @keyframes splb{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes splx{to{opacity:0;visibility:hidden;pointer-events:none}}
 .pick{display:flex;gap:8px;margin:12px 0 8px}.pick button{flex:1;padding:11px 6px;border:1px solid var(--ac);color:var(--ac);border-radius:6px;font-size:13px}.pick button:active{background:var(--ac);color:var(--on)}
+.dh small{display:block;max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pb{display:flex;gap:8px;padding:10px 12px;border-bottom:1px solid var(--ln)}
+.pb button{flex:1;height:38px;display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--ac);border-radius:8px;color:var(--ac);font-size:13px}
+.pb button.fill{background:var(--ac);color:var(--on)}.pb button:active{opacity:.7}
+.pb svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.f.d{gap:8px;font-weight:500}
+.f em:active{background:var(--ln)}
+.fic{width:24px;height:24px;flex:none}
+.chv{font-style:normal;width:14px;flex:none;display:inline-block;text-align:center;color:var(--mu);font-size:18px;line-height:1;transition:transform .15s}.chv.o{transform:rotate(90deg)}
+.mb label{display:block;font-size:12px;color:var(--mu);margin:14px 0 6px}
+.mb select{width:100%;background:var(--ed);border:1px solid var(--ln);border-radius:6px;padding:11px;font-size:14px;outline:0}
+.pick button{display:flex;align-items:center;justify-content:center;gap:8px}
+.pick+.pick{margin-top:0}
+.bigb{background:var(--ac);color:var(--on);border-radius:8px;padding:12px;font-size:14px;margin-top:10px}.bigb:active{opacity:.8}
+.pc{display:flex;align-items:center;gap:12px;padding:12px;margin:8px 0;background:var(--bar);border:1px solid var(--ln);border-radius:10px;cursor:pointer}.pc.on{border-color:var(--ac)}
+.pc div{flex:1;min-width:0}.pc b{display:block;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pc small{color:var(--mu);font-size:12px}
+.pc em{font-style:normal;width:34px;height:34px;display:grid;place-items:center;color:var(--mu);font-size:18px;border-radius:50%;flex:none}.pc em:active{background:var(--ln)}
+.toast{max-width:90%;text-align:center}
 </style></head>
 <body>
 <script>
@@ -100,12 +118,17 @@ window.onerror=function(m,u,l){var d=document.createElement("pre");d.style.cssTe
 
 <div class="scrim" id="scrim" onclick="drawer(0)"></div>
 <div class="dr" id="dr">
- <div class="dh"><span id="dlogo"></span><div><b>Nex Code</b><small>proyek-saya</small></div></div>
+ <div class="dh"><span id="dlogo"></span><div><b>Nex Code</b><small id="dpn"></small></div></div>
+ <div class="pb">
+  <button onclick="$('zf').click()"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>Pilih file</button>
+  <button class="fill" onclick="pjOpen()"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8M8 12h8"/></svg>Proyek baru</button>
+ </div>
  <div class="fl" id="fl"></div>
  <div class="da"><button onclick="mOpen('new')">+ File baru</button><button onclick="$('fi').click()">Impor / gambar</button></div>
 </div>
 <input type="file" id="fi" multiple hidden>
 <input type="file" id="bgf" accept="image/*" hidden>
+<input type="file" id="zf" accept=".zip,application/zip,application/x-zip-compressed" hidden>
 <div class="menu" id="mnu">
  <button onclick="setOpen()">Pengaturan</button>
  <button onclick="dl(S.cur)">Unduh file ini</button>
@@ -118,7 +141,9 @@ window.onerror=function(m,u,l){var d=document.createElement("pre");d.style.cssTe
 
 <div class="mod" id="mod"><div class="mb"><h3 id="mT"></h3>
  <input type="text" id="mIn" placeholder="contoh: app.js" autocapitalize="off" onkeydown="if(event.key=='Enter')mOk()">
+ <div id="fsw" style="display:none"><label for="fsel">Masukkan ke folder</label><select id="fsel"></select></div>
  <div class="pick" id="pick"><button onclick="$('fi').click()">Pilih file dari HP</button></div>
+ <div class="pick" id="pickf"><button onclick="folderMode()"><svg style="width:20px;height:20px;flex:none" viewBox="0 0 24 24"><path d="M2 6.5A2.5 2.5 0 0 1 4.5 4h4.2c.6 0 1.2.3 1.6.8l1.2 1.4h8A2.5 2.5 0 0 1 22 8.7v8.8a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 17.5z" fill="#e0a21b"/><path d="M2 9.6A2.5 2.5 0 0 1 4.5 7.2h15A2.5 2.5 0 0 1 22 9.7v7.8a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 17.5z" fill="#ffc83d"/></svg>Buat folder</button></div>
  <div class="bt"><button onclick="mClose()">Batal</button><button class="pri" id="mOkB" onclick="mOk()">Buat</button></div></div></div>
 
 <div class="full" id="st">
@@ -126,6 +151,10 @@ window.onerror=function(m,u,l){var d=document.createElement("pre");d.style.cssTe
  <div class="stb" id="stb"></div>
 </div>
 
+<div class="full" id="pj">
+ <div class="top"><button class="ib" onclick="$('pj').classList.remove('on')" aria-label="Kembali"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><div class="ttl"><b>Proyek</b><small>pilih atau buat proyek</small></div></div>
+ <div class="stb" id="pjb"></div>
+</div>
 <div class="full" id="pv">
  <div class="top"><button class="ib" onclick="pvClose()" aria-label="Kembali"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
   <div class="ttl"><b id="pvT">Pratinjau</b><small>hasil kode</small></div>
@@ -151,16 +180,31 @@ light:["#ffffff","#eceff4","#e4e8ee","#2563eb","#ffffff","#1f2328","#6b7280","#d
 var TN={nex:"Nex Biru",dark:"Gelap",monokai:"Monokai",dracula:"Dracula",solar:"Solarized",amoled:"AMOLED",light:"Terang"};
 
 var LOGOURL=$("spimg").src,LOGO='<img class="lgo" alt="Nex Code" src="'+LOGOURL+'">';
-var README=['![logo](logo)','','# Nex Code','','> Tulis, jalankan, dan simpan kodemu dari HP atau browser.','','## Fitur','- Editor dengan syntax highlight dan nomor baris','- Tiap bahasa punya ikon sendiri','- Buat file baru atau pilih file dari HP lewat tombol +','- Impor file dan gambar, gambar bisa dipakai di HTML','- Pengaturan tema, warna latar, dan gambar latar dari galeri','- Semua tersimpan otomatis di perangkat','','## Menjalankan kode','HTML, CSS, JS, SVG, JSON, dan Markdown jalan langsung di browser.','','Python, Java, C, C++, C#, Go, Rust, PHP, Ruby, Kotlin, Swift, TypeScript, Bash, SQL, Lua, R, Perl, Haskell, Scala, Elixir, dan beberapa bahasa lain dijalankan lewat server online (butuh internet). Untuk Java, pakai `public class Main`.','','README ini hanya untuk dibaca dan tidak bisa dijalankan.'].join("\n");
+var README=['![logo](logo)','','# Nex Code','','> Tulis, jalankan, dan simpan kodemu dari HP atau browser.','','## Fitur','- Editor dengan syntax highlight dan nomor baris','- Tiap bahasa punya ikon sendiri','- Buat file baru atau pilih file dari HP lewat tombol +','- Impor file dan gambar, gambar bisa dipakai di HTML','- Pengaturan tema, warna latar, dan gambar latar dari galeri','- Buat folder dan masukkan file ke dalam folder','- Banyak proyek, dan impor proyek dari file .zip','- Semua tersimpan otomatis di perangkat','','## Menjalankan kode','HTML, CSS, JS, SVG, JSON, dan Markdown jalan langsung di browser.','','Python, Java, C, C++, C#, Go, Rust, PHP, Ruby, Kotlin, Swift, TypeScript, Bash, SQL, Lua, R, Perl, Haskell, Scala, Elixir, dan beberapa bahasa lain dijalankan lewat server online (butuh internet). Untuk Java, pakai `public class Main`.','','README ini hanya untuk dibaca dan tidak bisa dijalankan.'].join("\n");
 var DEF={"index.html":'<!DOCTYPE html>\n<html lang="id">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1">\n  <title>Halo Dunia</title>\n  <link rel="stylesheet" href="style.css">\n</head>\n<body>\n  <h1>Halo, dunia!</h1>\n  <button id="btn">Klik aku</button>\n  <p id="out"></p>\n  <script src="script.js"><\/script>\n</body>\n</html>',
 "style.css":'body{\n  font-family:sans-serif;\n  display:grid;\n  place-items:center;\n  min-height:100vh;\n  margin:0;\n  background:#14142b;\n  color:#fff;\n}\nbutton{\n  padding:12px 24px;\n  border:0;\n  border-radius:8px;\n  background:#2aa5ff;\n  color:#fff;\n  font-size:16px;\n}',
 "script.js":'let n = 0;\nconst out = document.getElementById("out");\n\ndocument.getElementById("btn").onclick = () => {\n  n++;\n  out.textContent = "Kamu klik " + n + " kali";\n  console.log("klik ke-" + n);\n};\n\nconsole.log("Script jalan!");'};
 
-function fresh(set){return{files:Object.assign({},DEF),order:Object.keys(DEF),open:[RM].concat(Object.keys(DEF)),cur:RM,src:{},set:set||{theme:"nex",fs:14,wrap:0,edbg:"",bgimg:"",dim:0.6}}}
-var S=fresh();
-try{var sv=JSON.parse(localStorage.getItem("nexcode")||"null");if(sv&&sv.order&&sv.order.length){S=sv;S.src=S.src||{};S.set=Object.assign(fresh().set,S.set);delete S.set.api}}catch(e){}
+var BLANK='<!DOCTYPE html>\n<html lang="id">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1">\n  <title>Baru</title>\n</head>\n<body>\n\n</body>\n</html>';
+function dset(){return{theme:"nex",fs:14,wrap:0,edbg:"",bgimg:"",dim:0.6}}
+function uid(){return"p"+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function newProj(name,files,first){var f=files||Object.assign({},DEF),o=Object.keys(f),p={id:uid(),name:name,files:f,order:o,folders:[],col:{},src:{},open:[RM],cur:RM};if(!files)p.open=[RM].concat(o);else if(first){p.open=[RM,first];p.cur=first}return p}
+function fix(p){p.files=p.files||{};delete p.files[RM];p.order=(p.order||Object.keys(p.files)).filter(function(f){return f!=RM&&p.files[f]!=null});p.folders=p.folders||[];p.col=p.col||{};p.src=p.src||{};p.name=p.name||"proyek";p.open=(p.open||[]).filter(function(f){return f==RM||p.files[f]!=null});if(!p.open.length)p.open=[RM];if(p.cur!=RM&&p.files[p.cur]==null)p.cur=p.open[0];if(p.open.indexOf(p.cur)<0)p.open.push(p.cur);return p}
+var G=null;
+try{
+ var raw=localStorage.getItem("nexcode2");
+ if(raw){G=JSON.parse(raw);if(!G||!G.projs||!G.projs.length)G=null}
+ if(!G){var old=JSON.parse(localStorage.getItem("nexcode")||"null");
+  if(old&&old.order&&old.order.length){var os=Object.assign(dset(),old.set);delete os.api;delete old.set;old.id=uid();old.name="proyek-saya";G={projs:[fix(old)],act:old.id,set:os}}}
+}catch(e){G=null}
+if(!G){var p0=newProj("proyek-saya");G={projs:[p0],act:p0.id,set:dset()}}
+G.set=Object.assign(dset(),G.set);G.projs.forEach(fix);
+var S=G.projs.filter(function(p){return p.id==G.act})[0]||G.projs[0];G.act=S.id;
+var ST=G.set;
 function F(n){return n==RM?README:S.files[n]}
-function save(){try{localStorage.setItem("nexcode",JSON.stringify(S))}catch(e){toast("Penyimpanan penuh atau diblokir browser")}}
+function save(){try{localStorage.setItem("nexcode2",JSON.stringify(G))}catch(e){toast("Penyimpanan penuh atau diblokir browser")}}
+function saveD(){clearTimeout(saveD.h);saveD.h=setTimeout(save,500)}
+addEventListener("pagehide",save);
 function toast(m){var t=$("tst");t.textContent=m;t.className="toast on";clearTimeout(toast.h);toast.h=setTimeout(function(){t.className="toast"},1800)}
 function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
 function ext(n){return(n.split(".").pop()||"").toLowerCase()}
@@ -198,20 +242,20 @@ function md(t){var o=[],L=t.split("\n"),c=false,li=0;
  cl();return o.join("")}
 
 var ta=$("ta");
-function paint(){var v=ta.value,c=v.split("\n").length,g="";$("hl").innerHTML=hi(v,lang(S.cur))+"\n";for(var i=1;i<=c;i++)g+=i+"\n";$("gut").textContent=g;$("gut").style.display=S.set.wrap?"none":"";sync()}
+function paint(){var v=ta.value,c=v.split("\n").length,g="";$("hl").innerHTML=hi(v,lang(S.cur))+"\n";for(var i=1;i<=c;i++)g+=i+"\n";$("gut").textContent=g;$("gut").style.display=ST.wrap?"none":"";sync()}
 function sync(){$("hl").scrollTop=ta.scrollTop;$("hl").scrollLeft=ta.scrollLeft;$("gut").scrollTop=ta.scrollTop}
-function theme(){var r=document.documentElement.style,t=T[S.set.theme]||T.nex,has=!!S.set.bgimg;
+function theme(){var r=document.documentElement.style,t=T[ST.theme]||T.nex,has=!!ST.bgimg;
  TK.forEach(function(k,i){r.setProperty("--"+k,t[i])});
- if(S.set.edbg)r.setProperty("--ed",S.set.edbg);
- r.setProperty("--fs",S.set.fs+"px");
- ta.style.whiteSpace=$("hl").style.whiteSpace=S.set.wrap?"pre-wrap":"pre";
+ if(ST.edbg)r.setProperty("--ed",ST.edbg);
+ r.setProperty("--fs",ST.fs+"px");
+ ta.style.whiteSpace=$("hl").style.whiteSpace=ST.wrap?"pre-wrap":"pre";
  $("bgi").style.display=$("bgd").style.display=has?"block":"none";
- if(has){$("bgi").style.backgroundImage='url("'+S.set.bgimg+'")';$("bgd").style.opacity=S.set.dim}
+ if(has){$("bgi").style.backgroundImage='url("'+ST.bgimg+'")';$("bgd").style.opacity=ST.dim}
  $("edw").classList.toggle("hasimg",has)}
 function render(){var n=S.cur,ro=n==RM;
  $("tName").textContent=n;$("tSub").textContent=(LN[key(n)]||"Teks")+" \u00b7 Nex Code";$("bRun").classList.toggle("off",ro);
- $("tabs").innerHTML=S.open.map(function(f){return `<div class="tab${f==n?" on":""}" onclick="openF('${f}')">${ic(f)}${esc(f)}<i onclick="event.stopPropagation();closeF('${f}')">\u00d7</i></div>`}).join("")+`<button class="plus" onclick="mOpen('new')" aria-label="File baru">+</button>`;
- $("fl").innerHTML=S.order.map(function(f){return `<div class="f${f==n?" on":""}" onclick="openF('${f}');drawer(0)">${ic(f)}<span>${esc(f)}</span><em onclick="event.stopPropagation();delF('${f}')">\u00d7</em></div>`}).join("");
+ $("tabs").innerHTML=S.open.map(function(f){return `<div class="tab${f==n?" on":""}" onclick="openF('${f}')">${ic(f)}${esc(f.split("/").pop())}<i onclick="event.stopPropagation();closeF('${f}')">\u00d7</i></div>`}).join("")+`<button class="plus" onclick="mOpen('new')" aria-label="File baru">+</button>`;
+ $("fl").innerHTML=tree();$("dpn").textContent=S.name;
  ta.value=(ro||isImg(n))?"":(S.files[n]||"");paint();mode()}
 function mode(){var n=S.cur,im=isImg(n),m=ext(n)=="md"&&!S.src[n],v=im||m;
  $("mdv").style.display=v?"block":"none";$("code").style.display=v?"none":"flex";
@@ -220,11 +264,35 @@ function mode(){var n=S.cur,im=isImg(n),m=ext(n)=="md"&&!S.src[n],v=im||m;
 function openF(f){if(S.open.indexOf(f)<0)S.open.push(f);S.cur=f;save();render()}
 function closeF(f){var i=S.open.indexOf(f);S.open.splice(i,1);if(!S.open.length)S.open.push(S.order[0]||RM);if(S.cur==f)S.cur=S.open[Math.max(0,i-1)];save();render()}
 function delF(f){if(!confirm("Hapus "+f+"?"))return;delete S.files[f];S.order=S.order.filter(function(x){return x!=f});S.open=S.open.filter(function(x){return x!=f});if(!S.open.length)S.open.push(S.order[0]||RM);if(S.cur==f)S.cur=S.open[0];save();render()}
+function dirOf(p){var i=p.lastIndexOf("/");return i<0?"":p.slice(0,i)}
+function addDirs(p,path){var parts=path.split("/"),acc="";parts.pop();parts.forEach(function(s){acc=acc?acc+"/"+s:s;if(p.folders.indexOf(acc)<0)p.folders.push(acc)})}
+function allDirs(){var s={};function a(d){while(d){s[d]=1;d=dirOf(d)}}S.folders.forEach(a);S.order.forEach(function(f){a(dirOf(f))});return Object.keys(s)}
+function cmp(a,b){return a.localeCompare(b)}
+function fico(o){var back='<path d="M2 6.5A2.5 2.5 0 0 1 4.5 4h4.2c.6 0 1.2.3 1.6.8l1.2 1.4h8A2.5 2.5 0 0 1 22 8.7v8.8a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 17.5z" fill="#e0a21b"/>';
+ return '<svg class="fic" viewBox="0 0 24 24">'+back+(o?'<path d="M4.2 10.6A1.8 1.8 0 0 1 6 9.2h15.4a1.2 1.2 0 0 1 1.2 1.5l-2 7.8A2.3 2.3 0 0 1 18.4 20H4.5A2.5 2.5 0 0 1 2 17.5z" fill="#ffc83d"/>':'<path d="M2 9.6A2.5 2.5 0 0 1 4.5 7.2h15A2.5 2.5 0 0 1 22 9.7v7.8a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 17.5z" fill="#ffc83d"/>')+'</svg>'}
+function tree(){var ds=allDirs(),h='<div class="f'+(S.cur==RM?" on":"")+'" style="padding-left:28px" onclick="openF(\'README.md\');drawer(0)">'+ic(RM)+'<span>README.md</span></div>';
+ function walk(d,dep){
+  ds.filter(function(x){return dirOf(x)==d}).sort(cmp).forEach(function(x){var o=!S.col[x];
+   h+='<div class="f d" style="padding-left:'+(6+dep*16)+'px" onclick="togF(\''+x+'\')"><i class="chv'+(o?" o":"")+'">›</i>'+fico(o)+'<span>'+esc(x.split("/").pop())+'</span><em onclick="event.stopPropagation();mOpen(\'new\',\''+x+'\')">+</em><em onclick="event.stopPropagation();delFolder(\''+x+'\')">×</em></div>';
+   if(o)walk(x,dep+1)});
+  S.order.filter(function(f){return dirOf(f)==d}).sort(cmp).forEach(function(f){
+   h+='<div class="f'+(f==S.cur?" on":"")+'" style="padding-left:'+(28+dep*16)+'px" onclick="openF(\''+f+'\');drawer(0)">'+ic(f)+'<span>'+esc(f.split("/").pop())+'</span><em onclick="event.stopPropagation();delF(\''+f+'\')">×</em></div>'})}
+ walk("",0);return h}
+function togF(x){S.col[x]=S.col[x]?0:1;save();$("fl").innerHTML=tree()}
+function delFolder(x){if(!confirm("Hapus folder "+x+" beserta isinya?"))return;var pre=x+"/";Object.keys(S.files).forEach(function(k){if(k.indexOf(pre)==0)delete S.files[k]});S.order=S.order.filter(function(k){return k.indexOf(pre)!=0});S.open=S.open.filter(function(k){return k==RM||k.indexOf(pre)!=0});S.folders=S.folders.filter(function(d){return d!=x&&d.indexOf(pre)!=0});if(!S.open.length)S.open.push(RM);if(S.open.indexOf(S.cur)<0)S.cur=S.open[0];save();render()}
+function norm(p){var o=[];p.split("/").forEach(function(s){if(s==""||s==".")return;if(s=="..")o.pop();else o.push(s)});return o.join("/")}
+function rs(n,base){n=n.split("?")[0].split("#")[0];if(/^([a-z]+:|\/\/)/i.test(n))return null;var c=[];if(n.charAt(0)=="/")c.push(norm(n));else{if(base)c.push(norm(base+"/"+n));c.push(norm(n))}for(var i=0;i<c.length;i++)if(S.files[c[i]]!=null)return c[i];return null}
+function inject(h){if(/<head(\s[^>]*)?>/i.test(h))return h.replace(/<head(\s[^>]*)?>/i,function(m){return m+HOOK});var m=h.match(/^\s*<!doctype[^>]*>/i);return m?m[0]+HOOK+h.slice(m[0].length):HOOK+h}
+function switchP(id,quiet){var p=G.projs.filter(function(x){return x.id==id})[0];if(!p)return;S=p;G.act=id;save();pvClose();$("pj").classList.remove("on");drawer(0);render();if(!quiet)toast("Proyek: "+p.name)}
+function pjOpen(){drawer(0);$("pj").classList.add("on");pjUI()}
+function pjUI(){$("pjb").innerHTML='<div class="sec">BUAT PROYEK BARU</div><div class="row col"><input type="text" id="pjn" placeholder="Nama proyek, contoh: web-portofolio" maxlength="40" autocapitalize="off"><button class="bigb" onclick="pjNew()">+ Buat proyek</button></div><div class="row"><span>Punya proyek dalam .zip?</span><button class="chip" onclick="$(\'zf\').click()">Pilih file</button></div><div class="sec">PROYEK KAMU ('+G.projs.length+')</div>'+G.projs.map(function(p){var a=p.id==G.act;return '<div class="pc'+(a?" on":"")+'" onclick="switchP(\''+p.id+'\')"><span class="ico" style="background:var(--ac);color:var(--on);width:36px;height:36px;font-size:12px;border-radius:8px">&lt;/&gt;</span><div><b>'+esc(p.name)+'</b><small>'+Object.keys(p.files).length+' file'+(a?" · aktif":"")+'</small></div><em onclick="event.stopPropagation();delP(\''+p.id+'\')">×</em></div>'}).join("")}
+function pjNew(){var n=($("pjn").value||"").trim().slice(0,40);if(!n)return toast("Isi nama proyek dulu");var p=newProj(n,{"index.html":BLANK},"index.html");G.projs.push(p);switchP(p.id,1);toast("Proyek "+n+" dibuat")}
+function delP(id){if(G.projs.length<2)return toast("Minimal harus ada satu proyek");var p=G.projs.filter(function(x){return x.id==id})[0];if(!p||!confirm("Hapus proyek "+p.name+"?"))return;G.projs=G.projs.filter(function(x){return x.id!=id});if(G.act==id){S=G.projs[0];G.act=S.id;save();render()}else save();pjUI()}
 function drawer(on){$("dr").classList.toggle("on",!!on);$("scrim").classList.toggle("on",!!on)}
 function menu(e){e.stopPropagation();$("mnu").classList.toggle("on")}
 document.addEventListener("click",function(){$("mnu").classList.remove("on")});
 
-ta.oninput=function(){S.files[S.cur]=ta.value;save();paint()};
+ta.oninput=function(){S.files[S.cur]=ta.value;saveD();paint()};
 ta.onscroll=sync;
 ta.onkeydown=function(e){
  if(e.key=="Tab"){e.preventDefault();document.execCommand("insertText",false,"  ")}
@@ -239,20 +307,108 @@ $("keys").onclick=function(e){var b=e.target.closest("button");if(!b||S.cur==RM|
  else if(P[k]){document.execCommand("insertText",false,k+P[k]);ta.selectionStart=ta.selectionEnd=ta.selectionStart-1}
  else document.execCommand("insertText",false,k)};
 function copyAll(){try{navigator.clipboard.writeText(F(S.cur)||"").then(function(){toast("Tersalin")})}catch(e){toast("Gagal menyalin")}}
-function fmt(){if(S.cur==RM||isImg(S.cur)||ext(S.cur)=="md")return;var d=0,o=ta.value.split("\n").map(function(l){var t=l.trim(),cl=/^[}\])]/.test(t);if(cl)d=Math.max(0,d-1);var r="  ".repeat(d)+t;d=Math.max(0,d+(t.match(/[{(\[]/g)||[]).length-(t.match(/[})\]]/g)||[]).length+(cl?1:0));return r}).join("\n");ta.value=o;S.files[S.cur]=o;save();paint();toast("Dirapikan")}
+function fmt(){if(S.cur==RM||isImg(S.cur)||ext(S.cur)=="md")return;if(!/^(js|ts|json|css|c|cpp|cs|java|go|rs|php|kt|swift|scala|groovy|d)$/.test(key(S.cur)))return toast("Belum didukung untuk bahasa ini");var d=0,o=ta.value.split("\n").map(function(l){var t=l.trim(),cl=/^[}\])]/.test(t);if(cl)d=Math.max(0,d-1);var r="  ".repeat(d)+t;d=Math.max(0,d+(t.match(/[{(\[]/g)||[]).length-(t.match(/[})\]]/g)||[]).length+(cl?1:0));return r}).join("\n");ta.value=o;S.files[S.cur]=o;save();paint();toast("Dirapikan")}
 
 var MODE="new";
-function mOpen(m){if(m=="ren"&&(S.cur==RM))return toast("README tidak bisa diganti nama");MODE=m;$("mT").textContent=m=="new"?"File baru":"Ganti nama";$("mIn").value=m=="ren"?S.cur:"";$("mOkB").textContent=m=="new"?"Buat":"Simpan";$("pick").style.display=m=="new"?"flex":"none";
+function mOpen(m,dir){if(m=="ren"&&S.cur==RM)return toast("README tidak bisa diganti nama");MODE=m;
+ $("mT").textContent=m=="new"?"File baru":m=="folder"?"Folder baru":"Ganti nama";
+ $("mIn").value=m=="ren"?S.cur.split("/").pop():"";
+ $("mIn").placeholder=m=="folder"?"contoh: src":"contoh: app.js";
+ $("mOkB").textContent=m=="ren"?"Simpan":"Buat";
+ $("pick").style.display=$("pickf").style.display=m=="new"?"flex":"none";
+ var ds=allDirs().sort(cmp),sel=$("fsel");
+ sel.innerHTML='<option value="">(tanpa folder)</option>'+ds.map(function(d){return '<option value="'+d+'">'+esc(d)+'</option>'}).join("");
+ sel.value=dir||"";
+ $("fsw").style.display=m=="new"&&ds.length?"block":"none";
  $("mod").classList.add("on");drawer(0);setTimeout(function(){$("mIn").focus()},60)}
 function mClose(){$("mod").classList.remove("on")}
-function mOk(){var n=$("mIn").value.trim();if(!/^[\w.()-]+\.\w+$/.test(n))return toast("Nama tidak valid, contoh: app.js");
- if(MODE=="new"){if(S.files[n]!=null)return toast("File sudah ada");S.files[n]=ext(n)=="html"?'<!DOCTYPE html>\n<html>\n<head>\n  <meta charset="UTF-8">\n  <title>Baru</title>\n</head>\n<body>\n\n</body>\n</html>':"";S.order.push(n);mClose();openF(n)}
- else{var o=S.cur;if(n!=o&&S.files[n]!=null)return toast("Nama sudah dipakai");S.files[n]=S.files[o];if(n!=o)delete S.files[o];S.order=S.order.map(function(x){return x==o?n:x});S.open=S.open.map(function(x){return x==o?n:x});S.cur=n;mClose();save();render()}}
+function folderMode(){mOpen("folder")}
+function mOk(){var n=$("mIn").value.trim();
+ if(MODE=="folder"){
+  if(!/^[\w.()-]+(\/[\w.()-]+)*$/.test(n))return toast("Nama folder tidak valid, contoh: src");
+  if(allDirs().indexOf(n)>=0)return toast("Folder sudah ada");
+  addDirs(S,n+"/x");mClose();save();render();drawer(1);toast("Folder "+n+" dibuat");return}
+ if(!/^[\w.()-]+\.\w+$/.test(n))return toast("Nama tidak valid, contoh: app.js");
+ if(MODE=="new"){var dir=$("fsel").value,p=(dir?dir+"/":"")+n;
+  if(p==RM)return toast("Nama README.md sudah dipakai");
+  if(S.files[p]!=null)return toast("File sudah ada");
+  S.files[p]=ext(n)=="html"?BLANK:"";S.order.push(p);addDirs(S,p);
+  var a=dir;while(a){S.col[a]=0;a=dirOf(a)}
+  mClose();openF(p)}
+ else{var o=S.cur,d=dirOf(o),q=(d?d+"/":"")+n;
+  if(q==RM)return toast("Nama README.md sudah dipakai");
+  if(q!=o&&S.files[q]!=null)return toast("Nama sudah dipakai");
+  S.files[q]=S.files[o];if(q!=o)delete S.files[o];
+  S.order=S.order.map(function(x){return x==o?q:x});S.open=S.open.map(function(x){return x==o?q:x});S.cur=q;mClose();save();render()}}
+
+/*ZIP*/
+function readZip(buf){var dv=new DataView(buf),n=buf.byteLength,e=-1,i;
+ for(i=n-22;i>=Math.max(0,n-65557);i--){if(dv.getUint32(i,true)==0x06054b50){e=i;break}}
+ if(e<0)throw new Error("bukan file zip yang valid");
+ var cnt=dv.getUint16(e+10,true),p=dv.getUint32(e+16,true),out=[];
+ if(cnt==0xFFFF||p==0xFFFFFFFF)throw new Error("zip64 belum didukung");
+ for(i=0;i<cnt;i++){
+  if(p+46>n||dv.getUint32(p,true)!=0x02014b50)throw new Error("struktur zip rusak");
+  var nl=dv.getUint16(p+28,true),el=dv.getUint16(p+30,true),cl=dv.getUint16(p+32,true);
+  out.push({name:new TextDecoder("utf-8").decode(new Uint8Array(buf,p+46,nl)),flag:dv.getUint16(p+8,true),method:dv.getUint16(p+10,true),csize:dv.getUint32(p+20,true),usize:dv.getUint32(p+24,true),lho:dv.getUint32(p+42,true)});
+  p+=46+nl+el+cl}
+ return out}
+async function zipData(buf,en){
+ if(en.usize==0)return new Uint8Array(0);
+ var dv=new DataView(buf),lo=en.lho;
+ if(dv.getUint32(lo,true)!=0x04034b50)throw new Error("header lokal rusak");
+ var st=lo+30+dv.getUint16(lo+26,true)+dv.getUint16(lo+28,true),raw=new Uint8Array(buf,st,en.csize);
+ if(en.method==0)return raw;
+ if(en.method!=8)throw new Error("metode kompresi "+en.method+" tidak didukung");
+ if(typeof DecompressionStream=="undefined")throw new Error("WebView ini belum mendukung unzip");
+ var ds=new DecompressionStream("deflate-raw"),w=ds.writable.getWriter();
+ w.write(raw.slice()).catch(function(){});w.close().catch(function(){});
+ return new Uint8Array(await new Response(ds.readable).arrayBuffer())}
+function b64(u8,mime){var s="",i=0;for(;i<u8.length;i+=8192)s+=String.fromCharCode.apply(null,u8.subarray(i,i+8192));return"data:"+mime+";base64,"+btoa(s)}
+/*ENDZIP*/
+function isText(n){var k=key(n);return(!!IC[k]&&k!="img")||/^(txt|csv|tsv|xml|toml|ini|env|gitignore|lock|gradle|properties|conf|cfg|log|bat|cmd|ps1|dart|jsonc|mdx|rst|jsx|tsx|vue|mjs)$/.test(ext(n))}
+function isCode(n){var k=key(n);return!!LID[k]||/^(html|css|js|ts)$/.test(k)}
+async function importZip(file){
+ if(!file)return;
+ if(!/\.zip$/i.test(file.name))return toast("Pilih file .zip");
+ toast("Membaca zip...");
+ try{
+  var buf=await file.arrayBuffer(),ents=readZip(buf),keep=[],dirs=[],tot=0,skipped=0,files={};
+  if(ents.length>800)throw new Error("isi zip terlalu banyak (maks 800 entri)");
+  ents.forEach(function(en){
+   var nm=en.name.replace(/\\/g,"/").replace(/^(\.\/|\/)+/,""),isd=/\/$/.test(nm),seg=nm.split("/").filter(function(s){return s!=""&&s!="."});
+   if(!seg.length||seg.indexOf("..")>=0)return;
+   if(seg.some(function(s){return s=="__MACOSX"||s==".git"||s=="node_modules"||s==".DS_Store"}))return;
+   seg=seg.map(function(s){return s.replace(/[^\w.()-]/g,"_")});
+   if(isd)dirs.push(seg.join("/"));else keep.push({seg:seg,en:en})});
+  if(keep.length&&keep.every(function(k){return k.seg.length>1&&k.seg[0]==keep[0].seg[0]})){
+   var t=keep[0].seg[0];keep.forEach(function(k){k.seg=k.seg.slice(1)});
+   dirs=dirs.map(function(d){return d==t?"":d.indexOf(t+"/")==0?d.slice(t.length+1):d}).filter(Boolean)}
+  for(var i=0;i<keep.length;i++){
+   var k=keep[i],path=k.seg.join("/"),en=k.en;
+   if(path==RM)path="README(2).md";
+   var img=isImg(path),txt=!img&&isText(path);
+   if((!img&&!txt)||(en.flag&1)||en.usize>(img?8e6:2e6)){skipped++;continue}
+   tot+=en.usize;if(tot>40e6)throw new Error("zip terlalu besar (maks 40 MB)");
+   var u8=await zipData(buf,en),d;
+   if(img){var m=ext(path),mime=m=="jpg"?"image/jpeg":m=="ico"?"image/x-icon":"image/"+m;d=b64(u8,mime);if(d.length>900000)d=await new Promise(function(r){shrink(d,r)})}
+   else d=new TextDecoder("utf-8").decode(u8);
+   var b=path,c=1;while(files[b]!=null)b=path.replace(/(\.\w+)$/,"("+(++c)+")$1");
+   files[b]=d}
+  var names=Object.keys(files).sort(cmp);
+  if(!names.some(isCode))throw new Error("tidak ada file bahasa pemrograman di dalam zip");
+  var first=files["index.html"]!=null?"index.html":names.filter(isCode)[0];
+  var pr=newProj(file.name.replace(/\.zip$/i,"").slice(0,40)||"proyek-zip",files,first);
+  pr.order=names;names.forEach(function(x){addDirs(pr,x)});dirs.forEach(function(x){addDirs(pr,x+"/x")});
+  G.projs.push(pr);switchP(pr.id,1);
+  toast(names.length+" file diimpor"+(skipped?", "+skipped+" dilewati":""))
+ }catch(e){toast("Gagal: "+e.message)}}
+$("zf").onchange=function(){var f=this.files[0];this.value="";importZip(f)};
 
 function shrink(d,cb){var i=new Image();i.onload=function(){var k=Math.min(1,1600/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext("2d").drawImage(i,0,0,c.width,c.height);cb(c.toDataURL("image/jpeg",0.82))};i.onerror=function(){cb(d)};i.src=d}
 function add(n,d){
- if(ext(n)=="json"){try{var j=JSON.parse(d);if(j.nexcode&&j.files){Object.keys(j.files).forEach(function(k){if(S.order.indexOf(k)<0)S.order.push(k);S.files[k]=j.files[k]});save();render();toast("Proyek dipulihkan");return}}catch(x){}}
- var b=n,i=1;while(S.files[b]!=null)b=n.replace(/(\.\w+)$/,"("+(++i)+")$1");
+ if(ext(n)=="json"){try{var j=JSON.parse(d);if(j.nexcode&&j.files){Object.keys(j.files).forEach(function(k){if(k==RM)return;if(S.order.indexOf(k)<0)S.order.push(k);S.files[k]=j.files[k];addDirs(S,k)});save();render();toast("Proyek dipulihkan");return}}catch(x){}}
+ if(n==RM)n="README(2).md";var b=n,i=1;while(S.files[b]!=null)b=n.replace(/(\.\w+)$/,"("+(++i)+")$1");
  S.files[b]=d;S.order.push(b);openF(b);toast(b+" ditambahkan")}
 function importFrom(inp){[].forEach.call(inp.files,function(f){var n=f.name.replace(/[^\w.-]/g,"_"),r=new FileReader(),im;
  if(/^image\//.test(f.type)&&!isImg(n)){n=n.replace(/\.\w+$/,"")+"."+f.type.split("/")[1].replace("jpeg","jpg").replace("svg+xml","svg")}
@@ -265,8 +421,8 @@ $("bgf").onchange=function(){var f=this.files[0];this.value="";if(!f)return;var 
  r.readAsDataURL(f)};
 function blob(d){if(d.indexOf("data:")==0){var p=d.split(","),b=atob(p[1]),u=new Uint8Array(b.length);for(var i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return new Blob([u],{type:p[0].slice(5).split(";")[0]})}return new Blob([d],{type:"text/plain"})}
 function dlBlob(n,b){var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=n;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},4000)}
-function dl(n){if(n==RM)return toast("README tidak punya file");dlBlob(n,blob(S.files[n]));toast("Mengunduh "+n)}
-function dlAll(){dlBlob("nexcode-proyek.json",new Blob([JSON.stringify({nexcode:1,files:S.files})],{type:"application/json"}));toast("Cadangan diunduh")}
+function dl(n){if(n==RM)return toast("README tidak punya file");dlBlob(n.split("/").pop(),blob(S.files[n]));toast("Mengunduh "+n)}
+function dlAll(){dlBlob("nexcode-proyek.json",new Blob([JSON.stringify({nexcode:1,name:S.name,files:S.files})],{type:"application/json"}));toast("Cadangan diunduh")}
 
 var HOOK='<script>(function(){function s(t,a){try{parent.postMessage({__c:1,t:t,m:[].map.call(a,function(x){try{return typeof x=="object"?JSON.stringify(x):String(x)}catch(e){return String(x)}}).join(" ")},"*")}catch(e){}}["log","info","warn","error"].forEach(function(k){var o=console[k];console[k]=function(){s(k,arguments);o.apply(console,arguments)}});addEventListener("error",function(e){s("error",[e.message+" (baris "+e.lineno+")"])});addEventListener("unhandledrejection",function(e){s("error",["Promise ditolak: "+e.reason])})})()<\/script>';
 var API=atob("aHR0cHM6Ly9jZS5qdWRnZTAuY29t");
@@ -281,10 +437,11 @@ function build(){var cur=S.cur,e=key(cur),f=S.files[cur],ix=S.files["index.html"
  else if(e=="css")h=ix||'<body><p>Buat index.html untuk menjalankan CSS ini.</p>';
  else if(e=="js")h=ix||'<body><script>'+f.replace(/<\/script/gi,"<\\/script")+'<\/script>';
  else h='<pre style="white-space:pre-wrap;font:14px monospace;padding:12px">'+esc(f)+'</pre>';
- h=h.replace(/<link[^>]*href=["']([^"']+)["'][^>]*>/gi,function(m,n){return S.files[n]!=null&&/css$/i.test(n)?"<style>"+S.files[n]+"</style>":m});
- h=h.replace(/<script([^>]*)src=["']([^"']+)["']([^>]*)><\/script>/gi,function(m,a,n,b){return S.files[n]!=null?"<script"+a+b+">"+S.files[n].replace(/<\/script/gi,"<\\/script")+"<\/script>":m});
- S.order.forEach(function(n){if(isImg(n)){var d=S.files[n];h=h.split('"'+n+'"').join('"'+d+'"').split("'"+n+"'").join("'"+d+"'").split("("+n+")").join("("+d+")")}});
- return HOOK+h}
+ var base=e=="html"?dirOf(cur):"";
+ h=h.replace(/<link[^>]*href=["']([^"']+)["'][^>]*>/gi,function(m,n){var r=rs(n,base);return r&&/css$/i.test(r)?"<style>"+S.files[r]+"</style>":m});
+ h=h.replace(/<script([^>]*)src=["']([^"']+)["']([^>]*)><\/script>/gi,function(m,a,n,b){var r=rs(n,base);return r!=null&&!isImg(r)?"<script"+a+b+">"+S.files[r].replace(/<\/script/gi,"<\\/script")+"<\/script>":m});
+ S.order.forEach(function(n){if(isImg(n)){var d=S.files[n],vs=[n,"./"+n,"/"+n];if(base&&n.indexOf(base+"/")==0){var r=n.slice(base.length+1);vs.push(r,"./"+r)}vs.forEach(function(v){h=h.split('"'+v+'"').join('"'+d+'"').split("'"+v+"'").join("'"+d+"'").split("("+v+")").join("("+d+")")})}});
+ return inject(h)}
 function openPv(m){$("pv").classList.add("on");$("fr").style.display=m=="web"?"block":"none";$("rm").style.display=m=="rm"?"flex":"none";$("pvC").style.display=m=="web"?"":"none";$("con").classList.remove("on");$("pvT").textContent=S.cur}
 function pvClose(){$("pv").classList.remove("on");$("fr").srcdoc=""}
 function run(){var n=S.cur;if(n==RM)return toast("README tidak bisa dijalankan");var k=key(n);
@@ -297,10 +454,10 @@ async function remote(n,k){var id=LID[k];openPv("rm");var o=$("rmo");
   var out=(d.compile_output||"")+(d.stdout||"")+(d.stderr?"\n[stderr]\n"+d.stderr:"")+(d.message?"\n"+d.message:"");
   o.textContent=(out||"(tidak ada output)")+"\n\n\u2014 "+d.status.description+(d.time?" \u00b7 "+d.time+"s":"")+(d.memory?" \u00b7 "+Math.round(d.memory/1024)+" MB":"")}
  catch(e){o.textContent="Gagal terhubung ke server: "+e.message+"\nPastikan internet aktif lalu coba lagi."}}
-addEventListener("message",function(e){var d=e.data;if(!d||!d.__c)return;var l=document.createElement("div");l.className=d.t=="error"?"e":d.t=="warn"?"w":"";l.textContent="\u203a "+d.m;$("lg").appendChild(l);$("lg").scrollTop=1e9;if(d.t=="error")$("con").classList.add("on")});
+addEventListener("message",function(e){var d=e.data;if(e.source!==$("fr").contentWindow||!d||!d.__c)return;var l=document.createElement("div");l.className=d.t=="error"?"e":d.t=="warn"?"w":"";l.textContent="\u203a "+d.m;$("lg").appendChild(l);$("lg").scrollTop=1e9;if(d.t=="error")$("con").classList.add("on")});
 
 function setOpen(){$("st").classList.add("on");stUI()}
-function stUI(){var s=S.set;$("stb").innerHTML=`
+function stUI(){var s=ST;$("stb").innerHTML=`
 <div class="sec">Tema</div><div class="chips">${Object.keys(T).map(function(k){return `<button class="chip${s.theme==k?" on":""}" onclick="setT('${k}')">${TN[k]}</button>`}).join("")}</div>
 <div class="row"><span>Warna latar kode</span><span><input type="color" value="${s.edbg||T[s.theme][0]}" oninput="setBg(this.value)"> <button class="chip" onclick="setBg('')">Reset</button></span></div>
 <div class="row"><span>Gambar latar kode</span><span><button class="chip" onclick="$('bgf').click()">Pilih dari galeri</button> <button class="chip" onclick="setImg('')">Hapus</button></span></div>
@@ -309,13 +466,13 @@ ${s.bgimg?`<div class="row"><span>Gelapkan gambar: <b id="dimv">${Math.round(s.d
 <div class="row"><span>Word wrap</span><input type="checkbox" ${s.wrap?"checked":""} onchange="setW(this.checked)"></div>
 <div class="sec">Proyek</div>
 <div class="row" onclick="resetAll()"><span style="color:#f2777a">Reset proyek ke contoh awal</span></div>`}
-function setT(k){S.set.theme=k;S.set.edbg="";save();theme();stUI()}
-function setBg(v){S.set.edbg=v;save();theme();if(!v)stUI()}
-function setImg(v){S.set.bgimg=v;save();theme();stUI()}
-function setDim(v){S.set.dim=v/100;save();theme();$("dimv").textContent=v}
-function setFs(v){S.set.fs=+v;save();theme();$("fsv").textContent=v}
-function setW(c){S.set.wrap=c?1:0;save();theme();paint()}
-function resetAll(){if(confirm("Hapus semua file dan kembali ke contoh awal?")){S=fresh(S.set);save();$("st").classList.remove("on");render()}}
+function setT(k){ST.theme=k;ST.edbg="";save();theme();stUI()}
+function setBg(v){ST.edbg=v;save();theme();if(!v)stUI()}
+function setImg(v){ST.bgimg=v;save();theme();stUI()}
+function setDim(v){ST.dim=v/100;save();theme();$("dimv").textContent=v}
+function setFs(v){ST.fs=+v;save();theme();$("fsv").textContent=v}
+function setW(c){ST.wrap=c?1:0;save();theme();paint()}
+function resetAll(){if(confirm("Reset proyek ini ke contoh awal? Semua file di proyek ini terhapus.")){var p=newProj(S.name);p.id=S.id;Object.keys(S).forEach(function(k){delete S[k]});Object.assign(S,p);save();$("st").classList.remove("on");render()}}
 
 $("dlogo").innerHTML=LOGO;theme();render();
 setTimeout(function(){var p=$("spl");if(!p)return;p.classList.add("out");setTimeout(function(){p.remove()},450)},1200);
