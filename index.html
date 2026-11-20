@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NiorSpace – Cyber Security Competition &amp; Learning</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+:root{--bg:#f4f7fc;--card:#fff;--ink:#0b1b4d;--mut:#5b6785;--line:#e1e7f2;--pri:#1d4ed8;--pri2:#2563eb;--ok:#0f9d6b;--warn:#c27803;--bad:#d1344a;--hero:#0b1b4d;--code:#0d1530;--codeink:#dbe5ff}
+@media(prefers-color-scheme:dark){:root{--bg:#0a1126;--card:#111b38;--ink:#e8edfb;--mut:#92a0c4;--line:#1f2c52;--pri:#4b82f5;--pri2:#5f93ff;--hero:#060c1d;--code:#070d20}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:inherit;text-decoration:none}
+.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:20px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.06em;font-size:18px}
+.links{display:flex;gap:4px;margin-left:auto}
+.links a{padding:8px 14px;border-radius:8px;color:var(--mut);font-weight:600;display:flex;gap:8px;align-items:center}
+.links a:hover,.links a.on{color:var(--pri);background:color-mix(in srgb,var(--pri) 10%,transparent)}
+.user{display:flex;align-items:center;gap:10px}
+.user img,.av{width:34px;height:34px;border-radius:50%;background:var(--pri);color:#fff;display:grid;place-items:center;font-weight:700;object-fit:cover}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:10px;padding:10px 18px;font:600 14px inherit;background:var(--pri);color:#fff;cursor:pointer}
+.btn:hover{background:var(--pri2)}.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}.btn.ghost:hover{background:color-mix(in srgb,var(--pri) 8%,transparent)}
+.btn.sm{padding:6px 12px;font-size:13px}.btn.red{background:var(--bad)}.btn.ok{background:var(--ok)}.btn[disabled]{opacity:.45;cursor:not-allowed}
+.hero{background:var(--hero);color:#fff;background-image:radial-gradient(600px 300px at 80% 0,rgba(37,99,235,.45),transparent),linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:auto,40px 40px,40px 40px}
+.hero .wrap{padding-top:84px;padding-bottom:84px}
+.hero h1{font-size:clamp(32px,5vw,54px);line-height:1.1;margin:0 0 16px;max-width:720px;letter-spacing:-.02em}
+.hero p{max-width:600px;color:#b8c5ec;font-size:17px;margin:0 0 28px}
+.tag{display:inline-flex;gap:8px;align-items:center;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9db8ff;border:1px solid rgba(157,184,255,.3);padding:5px 12px;border-radius:99px;margin-bottom:20px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+section.s{padding:52px 0}
+h2{font-size:28px;margin:0 0 6px;letter-spacing:-.01em}.sub{color:var(--mut);margin:0 0 28px}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.ic{width:44px;height:44px;border-radius:11px;display:grid;place-items:center;background:color-mix(in srgb,var(--pri) 12%,transparent);color:var(--pri);margin-bottom:14px}
+.card h3{margin:0 0 6px;font-size:17px}.card p{margin:0;color:var(--mut);font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:-34px;position:relative}
+.stats div{background:var(--card);padding:20px;text-align:center}.stats b{display:block;font-size:26px;color:var(--pri)}.stats span{color:var(--mut);font-size:13px}
+.badge{display:inline-flex;gap:6px;align-items:center;font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px}
+.b-open{background:#0f9d6b1f;color:var(--ok)}.b-closed{background:#d1344a1f;color:var(--bad)}.b-full{background:#c277031f;color:var(--warn)}.b-soon{background:#1d4ed81f;color:var(--pri)}
+.meta{display:grid;gap:6px;margin:14px 0;color:var(--mut);font-size:13px}.meta div{display:flex;gap:8px;align-items:center}
+.bar{height:7px;background:var(--line);border-radius:9px;overflow:hidden;margin:6px 0 16px}.bar i{display:block;height:100%;background:var(--pri);transition:width .4s}
+.podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:14px;align-items:end;margin-bottom:22px}
+.pod{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 12px;text-align:center}
+.pod.r1{padding-top:34px;padding-bottom:34px;border-color:var(--pri);box-shadow:0 10px 30px -12px var(--pri)}
+.pod img,.pod .av{width:64px;height:64px;margin:0 auto 10px;font-size:24px;border-radius:50%;display:grid;place-items:center;object-fit:cover}
+.rk{display:inline-block;padding:2px 12px;border-radius:99px;font-weight:800;color:#fff;background:#8a97b8;font-size:12px;margin-bottom:8px}.r1 .rk{background:#d9a406}.r3 .rk{background:#b0703a}
+.empty{text-align:center;color:var(--mut);padding:36px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+th,td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--line);font-size:14px}th{color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.06em}tr:last-child td{border:0}
+td .pf{display:flex;align-items:center;gap:10px}td .pf img,td .pf .av{width:28px;height:28px;font-size:12px}
+.sc{overflow-x:auto}
+.login{max-width:440px;margin:60px auto;text-align:center}.login .ic{margin:0 auto 16px}.gbtn{display:flex;justify-content:center;margin-top:20px;min-height:44px}
+input[type=text],input[type=number],input[type=date],select,textarea{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+label.l{font-size:12px;font-weight:700;color:var(--mut);display:block;margin-bottom:4px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:14px}
+.tabs{display:flex;gap:6px;margin-bottom:22px;flex-wrap:wrap}
+.modal{position:fixed;inset:0;background:rgba(5,10,30,.6);display:grid;place-items:center;z-index:50;padding:20px}.modal .card{width:100%;max-width:420px}
+footer{border-top:1px solid var(--line);padding:30px 0;color:var(--mut);font-size:13px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:10px;z-index:60;font-weight:600}
+/* learning */
+.prof{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.prof img,.prof .av{width:64px;height:64px;font-size:26px}
+.pst{display:flex;gap:26px;flex-wrap:wrap;margin-left:auto}.pst div{text-align:center}.pst b{display:flex;gap:6px;justify-content:center;align-items:center;font-size:22px}.pst span{font-size:12px;color:var(--mut)}
+.pst .i{color:var(--pri)}
+.lvl{flex:1;min-width:200px}
+.crumb{color:var(--mut);font-size:13px;margin-bottom:14px;display:flex;gap:8px;flex-wrap:wrap}.crumb a:hover{color:var(--pri)}
+.lessons{display:grid;gap:8px}
+.les{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.les:hover{border-color:var(--pri)}.les .n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px;background:var(--line);color:var(--mut);flex:none}
+.les.d .n{background:var(--ok);color:#fff}.les b{flex:1}.les small{color:var(--mut)}
+.lab{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:18px;align-items:start}
+.pane{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.pane .in{padding:22px}.pane h1{font-size:24px;margin:0 0 10px;letter-spacing:-.01em}
+.pane code,.inl{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:color-mix(in srgb,var(--pri) 12%,transparent);color:var(--pri);padding:1px 6px;border-radius:5px;font-size:13px}
+.pane pre{background:var(--code);color:var(--codeink);padding:14px;border-radius:10px;overflow-x:auto;font:13px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;margin:12px 0}
+.pane pre code{background:none;color:inherit;padding:0}
+.task{border-left:3px solid var(--pri);background:color-mix(in srgb,var(--pri) 8%,transparent);padding:12px 14px;border-radius:0 10px 10px 0;margin:16px 0}
+.task b{display:flex;gap:6px;align-items:center;color:var(--pri);margin-bottom:4px}
+.eh{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--code);color:#8fa3d6;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.eh .dots{display:flex;gap:6px}.eh .dots i{width:10px;height:10px;border-radius:50%;background:#32407a}
+#ed{display:block;width:100%;min-height:260px;border:0;border-radius:0;background:var(--code);color:var(--codeink);font:13.5px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;padding:14px;resize:vertical;tab-size:4;white-space:pre;overflow:auto;outline:0}
+.eb{display:flex;gap:8px;padding:12px 14px;border-top:1px solid #1d2a55;background:var(--code);flex-wrap:wrap}
+#out{margin:0;padding:14px;min-height:90px;max-height:240px;overflow:auto;background:#050918;color:#a8f0c6;font:13px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap}
+#out.err{color:#ff9aa8}iframe#pv{width:100%;height:240px;border:0;background:#fff;display:block}
+.res{padding:10px 14px;font-weight:700;font-size:14px;display:flex;gap:8px;align-items:center}.res.ok{background:#0f9d6b22;color:var(--ok)}.res.no{background:#d1344a22;color:var(--bad)}
+.opt{display:flex;gap:10px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:10px;margin-top:8px;cursor:pointer}
+.opt:hover{border-color:var(--pri)}.opt.sel{border-color:var(--pri);background:color-mix(in srgb,var(--pri) 10%,transparent)}.opt.good{border-color:var(--ok);background:#0f9d6b1a}.opt.bad{border-color:var(--bad);background:#d1344a1a}
+.opt input{accent-color:var(--pri)}
+@media(max-width:860px){.lab{grid-template-columns:1fr}.podium{grid-template-columns:1fr}}
+@media(max-width:720px){.links a span{display:none}.hero .wrap{padding:56px 20px}.user .nm{display:none}.pst{margin-left:0}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+<symbol id="trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.7V17c0 .6-.5 1-1 1.2-1.2.6-2 2-2 3.8M14 14.7V17c0 .6.5 1 1 1.2 1.2.6 2 2 2 3.8M18 2H6v7a6 6 0 0 0 12 0V2z"/></symbol>
+<symbol id="book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15zM20 17v5H6.5a2.5 2.5 0 0 1 0-5"/></symbol>
+<symbol id="code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></symbol>
+<symbol id="lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+<symbol id="users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
+<symbol id="cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+<symbol id="out" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
+<symbol id="adm" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
+<symbol id="ok" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="term" viewBox="0 0 24 24"><path d="m4 17 6-6-6-6M12 19h8"/></symbol>
+<symbol id="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="del" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></symbol>
+<symbol id="flag" viewBox="0 0 24 24"><path d="M4 22V4M4 4h13l-2 4 2 4H4"/></symbol>
+<symbol id="home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8M5 10v10h14V10"/></symbol>
+<symbol id="play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></symbol>
+<symbol id="bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></symbol>
+<symbol id="flame" viewBox="0 0 24 24"><path d="M12 2s5 4 5 9a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3 0-5 1-8z"/></symbol>
+<symbol id="star" viewBox="0 0 24 24"><path d="m12 2 3 7 7 .6-5.3 4.8 1.6 7.3L12 17.8 5.7 21.7l1.6-7.3L2 9.6 9 9z"/></symbol>
+<symbol id="arr" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="rst" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></symbol>
+<symbol id="x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+</defs></svg>
+
+<nav><div class="wrap">
+ <a href="#home" class="logo"><svg width="30" height="30" viewBox="0 0 32 32"><path d="M3 4h8l10 15V4h8v24h-8L11 13v15H3z" fill="#1d4ed8"/><path d="M11 13 21 28h-8L3 13z" fill="#0b2a8a" opacity=".55"/></svg>NIORSPACE</a>
+ <div class="links" id="links"></div><div id="auth"></div>
+</div></nav>
+<main id="app"></main>
+<footer><div class="wrap">© 2026 NiorSpace. Platform kompetisi &amp; pembelajaran cyber security.</div></footer>
+<div id="modal"></div>
+
+<script>
+const CLIENT_ID="202022467599-k8pkcmurai3u1jjjdgnfjm1kaui0p5jq.apps.googleusercontent.com";
+const ADMIN_EMAIL="youknowkawaki@gmail.com";
+const KEY="niorspace_v2",UKEY="niorspace_user",LKEY="niorspace_lp";
+const ic=n=>`<svg class="i"><use href="#${n}"/></svg>`;
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const day=n=>{const d=new Date(Date.now()+n*864e5);return d.toISOString().slice(0,10)};
+const fmt=d=>new Date(d+"T00:00:00").toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
+const seed=()=>({
+ comps:[
+  {id:"c1",name:"NiorCTF Qualifier 2026",desc:"Babak penyisihan CTF jeopardy: web, crypto, forensics, reverse engineering, dan pwn.",open:day(-10),close:day(14),quota:200,mode:"auto",prize:"Rp 15.000.000"},
+  {id:"c2",name:"Web Exploitation Challenge",desc:"Temukan dan eksploitasi kerentanan pada aplikasi web simulasi dalam 6 jam.",open:day(5),close:day(30),quota:100,mode:"auto",prize:"Rp 8.000.000"},
+  {id:"c3",name:"Digital Forensics Cup",desc:"Analisis memori, disk, dan jaringan untuk mengungkap insiden siber.",open:day(-30),close:day(-2),quota:80,mode:"auto",prize:"Rp 6.000.000"}],
+ users:[],winners:[],regs:[]});
+let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}if(!S||!S.comps)S=seed();
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+let U=null;try{const u=JSON.parse(localStorage.getItem(UKEY));if(u&&u.exp*1000>Date.now())U=u}catch(e){}
+let LP={};try{LP=JSON.parse(localStorage.getItem(LKEY))||{}}catch(e){}
+const saveLP=()=>{try{localStorage.setItem(LKEY,JSON.stringify(LP))}catch(e){}};
+const isAdmin=()=>U&&U.email&&U.email.toLowerCase()===ADMIN_EMAIL&&U.verified;
+const regCount=id=>S.regs.filter(r=>r.cid===id).length;
+const me=()=>LP[U.email]||(LP[U.email]={xp:0,done:{},last:"",streak:0});
+const avatar=(p,cls)=>p&&p.picture?`<img src="${esc(p.picture)}" alt="" referrerpolicy="no-referrer">`:`<div class="av">${esc((p&&p.name||"?")[0])}</div>`;
+
+function status(c){
+ const t=day(0);
+ if(c.mode==="closed")return["closed","Ditutup"];
+ if(regCount(c.id)>=+c.quota)return["full","Penuh"];
+ if(c.mode==="open")return["open","Dibuka"];
+ if(t<c.open)return["soon","Segera dibuka"];
+ if(t>c.close)return["closed","Ditutup"];
+ return["open","Dibuka"];
+}
+const toast=m=>{const e=document.createElement("div");e.className="toast";e.textContent=m;document.body.appendChild(e);setTimeout(()=>e.remove(),2600)};
+
+/* ---------- Google auth ---------- */
+function decodeJwt(t){const p=t.split(".")[1].replace(/-/g,"+").replace(/_/g,"/");return JSON.parse(decodeURIComponent(atob(p).split("").map(c=>"%"+c.charCodeAt(0).toString(16).padStart(2,"0")).join("")))}
+function onCred(r){
+ try{const p=decodeJwt(r.credential);
+  if(p.aud!==CLIENT_ID)return toast("Token tidak valid");
+  U={email:p.email,name:p.name,picture:p.picture,exp:p.exp,verified:p.email_verified===true};
+  localStorage.setItem(UKEY,JSON.stringify(U));
+  const k=S.users.findIndex(u=>u.email===U.email),rec={email:U.email,name:U.name,picture:U.picture};
+  if(k>=0)S.users[k]=rec;else S.users.push(rec);save();
+  toast("Berhasil masuk sebagai "+p.name);if(route()==="login")location.hash="#home";else render()}
+ catch(e){toast("Login gagal")}
+}
+function initGoogle(){if(!(window.google&&google.accounts&&google.accounts.id))return false;google.accounts.id.initialize({client_id:CLIENT_ID,callback:onCred});return true}
+function mountButtons(){
+ document.querySelectorAll(".gbtn").forEach(el=>{
+  if(initGoogle())google.accounts.id.renderButton(el,{theme:"outline",size:"large",text:"signin_with",shape:"pill",width:260});
+  else el.innerHTML='<span style="color:var(--mut);font-size:13px">Memuat Google Sign-In… pastikan situs dibuka dari domain yang terdaftar.</span>';
+ });
+}
+window.addEventListener("load",()=>setTimeout(mountButtons,400));
+function logout(){U=null;localStorage.removeItem(UKEY);try{google.accounts.id.disableAutoSelect()}catch(e){}location.hash="#home";render()}
+
+/* ---------- curriculum ---------- */
+const COURSES=[
+{id:"py",icon:"code",lang:"python",level:"Pemula",t:"Python Dasar",d:"Mulai dari nol: output, variabel, string, kondisi, perulangan, dan fungsi.",lessons:[
+ {t:"Hello, World",xp:10,body:`<p>Python membaca kode baris demi baris. Fungsi <code>print()</code> menampilkan teks ke layar. Teks harus diapit tanda kutip.</p><pre><code>print("Halo dunia")</code></pre>`,task:"Cetak teks <code>Halo NiorSpace</code> menggunakan print().",starter:"# Tulis kodemu di bawah\n",expect:"Halo NiorSpace",hint:"Gunakan print(\"...\") dengan teks di dalam tanda kutip.",sol:'print("Halo NiorSpace")'},
+ {t:"Variabel",xp:15,body:`<p>Variabel adalah wadah bernama untuk menyimpan nilai. Kamu membuatnya dengan tanda <code>=</code>.</p><pre><code>kota = "Jakarta"\numur = 20\nprint(kota, umur)</code></pre><p><code>print</code> dengan beberapa nilai memisahkannya dengan spasi.</p>`,task:"Isi <code>nama</code> dengan <code>\"Nior\"</code> dan <code>umur</code> dengan <code>17</code>. Output harus <code>Nior 17</code>.",starter:'nama = ""\numur = 0\nprint(nama, umur)\n',expect:"Nior 17",hint:"Ganti isi tanda kutip dan angka 0.",sol:'nama = "Nior"\numur = 17\nprint(nama, umur)'},
+ {t:"String",xp:15,body:`<p>String punya banyak method. Contoh: <code>.upper()</code> membuat huruf besar, <code>.lower()</code> huruf kecil, dan <code>len()</code> menghitung panjang. Gabungkan string dengan <code>+</code> atau f-string.</p><pre><code>s = "nior"\nprint(s.upper())\nprint(f"Halo {s}")</code></pre>`,task:"Cetak <code>kata</code> dalam huruf besar, lalu tambahkan <code>\" security\"</code>. Output: <code>CYBER security</code>.",starter:'kata = "cyber"\n# gunakan kata.upper()\n',expect:"CYBER security",hint:"print(kata.upper() + \" security\")",sol:'kata = "cyber"\nprint(kata.upper() + " security")'},
+ {t:"Percabangan",xp:20,body:`<p>Gunakan <code>if</code>, <code>elif</code>, dan <code>else</code> untuk mengambil keputusan. Perhatikan indentasi (4 spasi) dan tanda titik dua.</p><pre><code>suhu = 31\nif suhu > 30:\n    print("Panas")\nelse:\n    print("Sejuk")</code></pre>`,task:"Jika <code>skor &gt;= 75</code> cetak <code>Lulus</code>, selain itu cetak <code>Remedial</code>.",starter:"skor = 85\n# tulis if / else di sini\n",expect:"Lulus",hint:"if skor >= 75:\n    print(...)\nelse:\n    print(...)",sol:'skor = 85\nif skor >= 75:\n    print("Lulus")\nelse:\n    print("Remedial")'},
+ {t:"Perulangan",xp:20,body:`<p><code>for</code> mengulang kode. <code>range(n)</code> menghasilkan angka 0 sampai n-1, dan <code>range(a, b)</code> dari a sampai b-1.</p><pre><code>for i in range(3):\n    print(i)</code></pre>`,task:"Cetak angka 1 sampai 5, masing-masing di baris baru.",starter:"# gunakan for dan range\n",expect:"1\n2\n3\n4\n5",hint:"range(1, 6) menghasilkan 1 sampai 5.",sol:"for i in range(1, 6):\n    print(i)"},
+ {t:"Fungsi",xp:25,body:`<p>Fungsi membungkus kode agar bisa dipakai ulang. Gunakan <code>def</code> dan <code>return</code> untuk mengirim hasil.</p><pre><code>def tambah(a, b):\n    return a + b\n\nprint(tambah(2, 3))</code></pre>`,task:"Lengkapi fungsi <code>kuadrat(n)</code> agar mengembalikan n dikali n.",starter:"def kuadrat(n):\n    # kembalikan n kali n\n    pass\n\nprint(kuadrat(7))\n",expect:"49",hint:"Ganti pass dengan return n * n.",sol:"def kuadrat(n):\n    return n * n\n\nprint(kuadrat(7))"}]},
+{id:"js",icon:"term",lang:"javascript",level:"Pemula",t:"JavaScript Dasar",d:"Bahasa web: console.log, variabel, fungsi, array, dan loop. Berjalan langsung di browser.",lessons:[
+ {t:"console.log",xp:10,body:`<p><code>console.log()</code> mencetak nilai ke konsol, mirip print di Python.</p><pre><code>console.log("Halo");</code></pre>`,task:"Cetak <code>Halo NiorSpace</code>.",starter:"// Tulis kodemu\n",expect:"Halo NiorSpace",hint:'console.log("...");',sol:'console.log("Halo NiorSpace");'},
+ {t:"Variabel",xp:15,body:`<p>Gunakan <code>const</code> untuk nilai tetap dan <code>let</code> untuk nilai yang berubah. Akhiri pernyataan dengan titik koma.</p><pre><code>const a = 2;\nlet b = 3;\nconsole.log(a + b);</code></pre>`,task:"Cetak hasil kali <code>a</code> dan <code>b</code>.",starter:"const a = 6;\nconst b = 7;\n",expect:"42",hint:"console.log(a * b);",sol:"const a = 6;\nconst b = 7;\nconsole.log(a * b);"},
+ {t:"Fungsi",xp:20,body:`<p>Fungsi dideklarasikan dengan <code>function</code>. Gunakan template literal dengan backtick untuk menyisipkan variabel.</p><pre><code>function sapa(n) {\n  return "Hai, " + n;\n}</code></pre>`,task:"Lengkapi <code>sapa(nama)</code> agar mengembalikan <code>Halo, </code> diikuti nama.",starter:'function sapa(nama) {\n  // return "Halo, " + nama\n}\nconsole.log(sapa("Nior"));\n',expect:"Halo, Nior",hint:'return "Halo, " + nama;',sol:'function sapa(nama) {\n  return "Halo, " + nama;\n}\nconsole.log(sapa("Nior"));'},
+ {t:"Array",xp:20,body:`<p>Array menyimpan banyak nilai. Akses dengan indeks mulai dari 0. Properti <code>.length</code> memberi jumlah elemen.</p><pre><code>const x = ["a","b"];\nconsole.log(x[0], x.length);</code></pre>`,task:"Cetak jumlah elemen <code>bahasa</code>, lalu elemen terakhirnya, di dua baris.",starter:'const bahasa = ["Python", "JS", "Bash"];\n',expect:"3\nBash",hint:"Elemen terakhir ada di indeks length - 1.",sol:'const bahasa = ["Python", "JS", "Bash"];\nconsole.log(bahasa.length);\nconsole.log(bahasa[bahasa.length - 1]);'},
+ {t:"Loop",xp:25,body:`<p>Loop <code>for</code> punya tiga bagian: inisialisasi, kondisi, dan langkah.</p><pre><code>for (let i = 0; i &lt; 3; i++) {\n  console.log(i);\n}</code></pre>`,task:"Cetak bilangan genap 2, 4, 6, 8, 10, masing-masing di baris baru.",starter:"// gunakan for\n",expect:"2\n4\n6\n8\n10",hint:"Mulai i = 2 lalu tambah 2 setiap putaran (i += 2).",sol:"for (let i = 2; i <= 10; i += 2) {\n  console.log(i);\n}"}]},
+{id:"web",icon:"flag",lang:"html",level:"Pemula",t:"HTML & CSS",d:"Bangun halaman web pertamamu dengan pratinjau langsung di sebelah editor.",lessons:[
+ {t:"Heading",xp:10,body:`<p>HTML memakai tag. Heading terbesar adalah <code>&lt;h1&gt;</code>.</p><pre><code>&lt;h1&gt;Judul&lt;/h1&gt;</code></pre>`,task:"Buat <code>&lt;h1&gt;</code> berisi <code>NiorSpace</code>.",starter:"<!-- Tulis HTML di sini -->\n",re:["<h1[^>]*>\\s*NiorSpace\\s*</h1>"],hint:"<h1>NiorSpace</h1>",sol:"<h1>NiorSpace</h1>"},
+ {t:"Tautan",xp:15,body:`<p>Tag <code>&lt;a&gt;</code> membuat tautan; alamatnya di atribut <code>href</code>.</p><pre><code>&lt;a href="https://contoh.com"&gt;Klik&lt;/a&gt;</code></pre>`,task:"Buat tautan ke <code>https://nior.space</code> dengan teks apa saja.",starter:"",re:["<a[^>]+href=[\"']https://nior\\.space/?[\"'][^>]*>[^<]+</a>"],hint:'<a href="https://nior.space">Kunjungi</a>',sol:'<a href="https://nior.space">Kunjungi NiorSpace</a>'},
+ {t:"CSS Warna",xp:20,body:`<p>CSS ditulis dalam tag <code>&lt;style&gt;</code>. Aturannya: selektor, lalu properti dan nilai.</p><pre><code>&lt;style&gt;\n  p { color: red; }\n&lt;/style&gt;</code></pre>`,task:"Beri <code>h1</code> warna biru (<code>blue</code> atau kode hex).",starter:"<style>\n  /* tulis aturan h1 */\n</style>\n<h1>NiorSpace</h1>\n",re:["h1\\s*\\{[^}]*color\\s*:\\s*(blue|#[0-9a-fA-F]{3,6})"],hint:"h1 { color: blue; }",sol:"<style>\n  h1 { color: blue; }\n</style>\n<h1>NiorSpace</h1>"},
+ {t:"Flexbox",xp:25,body:`<p>Flexbox menata elemen dalam satu baris atau kolom. Aktifkan dengan <code>display: flex</code>, lalu atur perataan dengan <code>justify-content</code>.</p>`,task:"Buat <code>.box</code> memakai <code>display: flex</code> dan <code>justify-content: center</code>.",starter:'<style>\n  .box { border: 2px solid #1d4ed8; padding: 12px; }\n</style>\n<div class="box"><span>A</span><span>B</span></div>\n',re:["\\.box\\s*\\{[^}]*display\\s*:\\s*flex","\\.box\\s*\\{[^}]*justify-content\\s*:\\s*center"],hint:"Tambahkan dua properti ke dalam aturan .box.",sol:'<style>\n  .box { border: 2px solid #1d4ed8; padding: 12px; display: flex; justify-content: center; }\n</style>\n<div class="box"><span>A</span><span>B</span></div>'}]},
+{id:"pysec",icon:"lock",lang:"python",level:"Menengah",t:"Python untuk Security",d:"Terapkan Python pada kriptografi dasar: encoding, hashing, cipher, dan validasi password.",lessons:[
+ {t:"Base64",xp:20,body:`<p>Base64 adalah <b>encoding</b>, bukan enkripsi: siapa pun bisa membaliknya. Sering dipakai untuk mengirim data biner sebagai teks.</p><pre><code>import base64\nb = base64.b64encode(b"hai")\nprint(b.decode())</code></pre>`,task:"Cetak versi Base64 dari <code>pesan</code>.",starter:'import base64\npesan = "NiorSpace"\n# encode dulu ke bytes: pesan.encode()\n',expect:"TmlvclNwYWNl",hint:"base64.b64encode(pesan.encode()).decode()",sol:'import base64\npesan = "NiorSpace"\nprint(base64.b64encode(pesan.encode()).decode())'},
+ {t:"Hashing",xp:25,body:`<p>Hash adalah fungsi satu arah yang menghasilkan sidik jari tetap. SHA-256 selalu menghasilkan 64 karakter hex.</p><pre><code>import hashlib\nh = hashlib.sha256(b"data").hexdigest()</code></pre>`,task:"Hitung SHA-256 dari <code>\"nior\"</code> lalu cetak <b>panjang</b> hasil heksadesimalnya.",starter:"import hashlib\n",expect:"64",hint:'len(hashlib.sha256("nior".encode()).hexdigest())',sol:'import hashlib\nh = hashlib.sha256("nior".encode()).hexdigest()\nprint(len(h))'},
+ {t:"Caesar Cipher",xp:30,body:`<p>Caesar cipher menggeser tiap huruf sebanyak k posisi. Gunakan <code>ord()</code> untuk kode karakter dan <code>chr()</code> untuk membaliknya. Operator <code>%</code> membuat alfabet berputar.</p><pre><code>chr((ord("x") - 97 + 3) % 26 + 97)  # a</code></pre>`,task:"Lengkapi fungsi agar huruf kecil digeser sejauh k. <code>caesar(\"nior\", 3)</code> harus menghasilkan <code>qlru</code>.",starter:'def caesar(teks, k):\n    hasil = ""\n    for c in teks:\n        # geser huruf sejauh k (a-z)\n        hasil += c\n    return hasil\n\nprint(caesar("nior", 3))\n',expect:"qlru",hint:"hasil += chr((ord(c) - 97 + k) % 26 + 97)",sol:'def caesar(teks, k):\n    hasil = ""\n    for c in teks:\n        hasil += chr((ord(c) - 97 + k) % 26 + 97)\n    return hasil\n\nprint(caesar("nior", 3))'},
+ {t:"Cek Kekuatan Password",xp:30,body:`<p>Password kuat umumnya panjang dan bervariasi. Gunakan <code>len()</code> dan <code>any()</code> dengan generator untuk memeriksa karakter.</p><pre><code>any(c.isdigit() for c in "ab1")  # True</code></pre>`,task:"<code>kuat(pw)</code> bernilai <code>True</code> jika panjang minimal 8 <b>dan</b> mengandung angka.",starter:'def kuat(pw):\n    # kembalikan True / False\n    return False\n\nprint(kuat("abc12345"), kuat("abc"))\n',expect:"True False",hint:"return len(pw) >= 8 and any(c.isdigit() for c in pw)",sol:'def kuat(pw):\n    return len(pw) >= 8 and any(c.isdigit() for c in pw)\n\nprint(kuat("abc12345"), kuat("abc"))'}]},
+{id:"cyber",icon:"shield",lang:"quiz",level:"Pemula",t:"Dasar Cyber Security",d:"Konsep inti keamanan informasi lewat materi singkat dan kuis.",lessons:[
+ {t:"CIA Triad",xp:15,body:`<p>Tiga pilar keamanan informasi: <b>Confidentiality</b> (kerahasiaan), <b>Integrity</b> (keutuhan), dan <b>Availability</b> (ketersediaan). Enkripsi menjaga kerahasiaan, hash menjaga keutuhan, dan redundansi server menjaga ketersediaan.</p>`,q:"Serangan DDoS terutama mengancam pilar yang mana?",opts:["Confidentiality","Integrity","Availability","Authenticity"],ans:2,why:"DDoS membanjiri layanan sehingga tidak bisa diakses, yaitu mengganggu Availability."},
+ {t:"Phishing",xp:15,body:`<p>Phishing menipu korban agar menyerahkan kredensial atau menjalankan berkas berbahaya. Ciri umum: nada mendesak, domain mirip tapi berbeda, lampiran tak terduga, dan permintaan login lewat tautan.</p>`,q:"Mana tanda paling kuat sebuah email phishing?",opts:["Menggunakan logo perusahaan","Mendesak dan meminta login lewat tautan dengan domain janggal","Dikirim pada hari kerja","Memakai bahasa formal"],ans:1,why:"Urgensi ditambah tautan ke domain mencurigakan adalah pola klasik phishing."},
+ {t:"Password & MFA",xp:15,body:`<p>Gunakan password panjang dan unik untuk setiap akun, simpan di password manager. <b>MFA</b> menambah faktor kedua (aplikasi authenticator, kunci keamanan) sehingga password bocor saja tidak cukup.</p>`,q:"Manfaat utama MFA adalah...",opts:["Password tidak perlu diganti selamanya","Akun tetap terlindungi walau password bocor","Menghilangkan semua malware","Mempercepat login"],ans:1,why:"Faktor kedua menghalangi penyerang yang hanya memegang password."},
+ {t:"SQL Injection",xp:20,body:`<p>SQL Injection terjadi ketika input pengguna disambung langsung ke query, sehingga penyerang bisa mengubah makna query. Contoh rentan: <code>"SELECT * FROM users WHERE name='" + input + "'"</code>. Pertahanan utama adalah <b>parameterized query</b>.</p>`,q:"Pencegahan paling efektif terhadap SQL Injection?",opts:["Menyembunyikan pesan error saja","Memblokir tanda kutip di form","Prepared statement / parameterized query","Memakai HTTPS"],ans:2,why:"Parameterized query memisahkan kode SQL dari data sehingga input tidak dieksekusi sebagai perintah."},
+ {t:"Hash vs Enkripsi",xp:20,body:`<p><b>Enkripsi</b> dua arah: data bisa didekripsi dengan kunci yang benar. <b>Hash</b> satu arah: tidak bisa dibalik, dipakai untuk memverifikasi keutuhan dan menyimpan password (dengan salt dan algoritma lambat seperti bcrypt atau Argon2).</p>`,q:"Apa perbedaan utama hash dan enkripsi?",opts:["Hash bisa didekripsi, enkripsi tidak","Keduanya sama saja","Hash satu arah, enkripsi dapat didekripsi dengan kunci","Enkripsi selalu lebih lemah"],ans:2,why:"Hash tidak dirancang untuk dibalik, sedangkan enkripsi dapat dikembalikan dengan kunci."}]}
+];
+const course=id=>COURSES.find(c=>c.id===id);
+const cdone=c=>c.lessons.filter((_,i)=>U&&me().done[c.id+"-"+i]).length;
+
+/* ---------- views ---------- */
+const route=()=>(location.hash.replace("#","")||"home");
+function head(){
+ const r=route().split("-")[0],L=[["home","home","Beranda"],["competition","flag","Kompetisi"],["learn","book","Belajar"]];
+ if(isAdmin())L.push(["admin","adm","Admin"]);
+ document.getElementById("links").innerHTML=L.map(l=>`<a href="#${l[0]}" class="${r===l[0]?"on":""}">${ic(l[1])}<span>${l[2]}</span></a>`).join("");
+ document.getElementById("auth").innerHTML=U?`<div class="user">${avatar(U)}<span class="nm" style="font-weight:600">${esc(U.name)}</span><button class="btn ghost sm" onclick="logout()">${ic("out")}Keluar</button></div>`:`<a class="btn sm" href="#login">${ic("lock")}Masuk</a>`;
+}
+function loginCard(msg){return `<div class="wrap"><div class="card login"><div class="ic">${ic("lock")}</div><h2 style="font-size:22px">Masuk ke NiorSpace</h2><p class="sub" style="margin-bottom:0">${esc(msg||"Masuk menggunakan akun Google untuk melanjutkan.")}</p><div class="gbtn"></div></div></div>`}
+function vHome(){
+ const feats=[["flag","Kompetisi CTF","Ikuti lomba cyber security dan bandingkan kemampuanmu di papan peringkat."],["code","Belajar Koding Interaktif","Tulis dan jalankan kode langsung di browser, dapatkan XP di setiap pelajaran."],["lock","Python untuk Security","Praktik encoding, hashing, cipher, dan validasi password dengan kode nyata."],["shield","Dasar Cyber Security","Materi ringkas dan kuis tentang CIA triad, phishing, MFA, dan SQL injection."],["users","Login Akun Google","Satu akun untuk progres belajar, pendaftaran lomba, dan profil pemenang."],["trophy","Podium Juara","Pemenang tampil lengkap dengan nama dan foto akun Google mereka."]];
+ const open=S.comps.filter(c=>status(c)[0]==="open").length,ls=COURSES.reduce((a,c)=>a+c.lessons.length,0);
+ return `<div class="hero"><div class="wrap"><div class="tag">${ic("shield")}Cyber Security Platform</div><h1>Kompetisi dan belajar cyber security di satu tempat.</h1><p>Ikuti lomba, belajar koding lewat latihan interaktif, dan bangun karier di dunia keamanan siber.</p><div class="row"><a class="btn" href="#competition">${ic("flag")}Lihat Kompetisi</a><a class="btn ghost" style="color:#fff;border-color:rgba(255,255,255,.3)" href="#learn">${ic("code")}Mulai Belajar</a></div></div></div>
+ <div class="wrap"><div class="stats"><div><b>${S.comps.length}</b><span>Kompetisi</span></div><div><b>${open}</b><span>Pendaftaran dibuka</span></div><div><b>${S.regs.length}</b><span>Peserta terdaftar</span></div><div><b>${COURSES.length}</b><span>Kursus</span></div><div><b>${ls}</b><span>Pelajaran</span></div></div></div>
+ <section class="s"><div class="wrap"><h2>Semua yang kamu perlukan</h2><p class="sub">Dari latihan pertama sampai podium juara.</p><div class="grid">${feats.map(f=>`<div class="card"><div class="ic">${ic(f[0])}</div><h3>${f[1]}</h3><p>${f[2]}</p></div>`).join("")}</div></div></section>`;
+}
+function vComp(){
+ const cards=S.comps.map(c=>{const[s,l]=status(c),n=regCount(c.id),pct=Math.min(100,Math.round(n/c.quota*100)||0),done=U&&S.regs.some(r=>r.cid===c.id&&r.email===U.email);
+  return `<div class="card"><div class="row" style="justify-content:space-between;align-items:center"><div class="ic" style="margin:0">${ic("flag")}</div><span class="badge b-${s}">${l}</span></div><h3 style="margin-top:14px">${esc(c.name)}</h3><p>${esc(c.desc)}</p>
+  <div class="meta"><div>${ic("cal")}Buka: ${fmt(c.open)}</div><div>${ic("cal")}Tutup: ${fmt(c.close)}</div><div>${ic("trophy")}Hadiah: ${esc(c.prize)}</div></div>
+  <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--mut)"><span>Kuota</span><b>${n}/${c.quota}</b></div><div class="bar"><i style="width:${pct}%"></i></div>
+  ${done?`<button class="btn" disabled>${ic("ok")}Sudah terdaftar</button>`:`<button class="btn" ${s==="open"?"":"disabled"} onclick="regOpen('${c.id}')">${s==="open"?"Daftar Sekarang":s==="soon"?"Belum dibuka":s==="full"?"Kuota penuh":"Pendaftaran ditutup"}</button>`}</div>`}).join("");
+ const w=S.winners,top=w.slice(0,3),order=[1,0,2].filter(i=>top[i]);
+ const pod=order.map(i=>`<div class="pod r${i+1}"><span class="rk">JUARA ${i+1}</span>${avatar(top[i])}<b>${esc(top[i].name)}</b><div style="color:var(--mut);font-size:13px">${esc(top[i].team||top[i].email)}</div><div style="font-size:12px;color:var(--mut)">${esc(top[i].comp)}</div><div style="color:var(--pri);font-weight:800;margin-top:6px">${(+top[i].pts).toLocaleString("id-ID")} poin</div></div>`).join("");
+ const rest=w.slice(3).map((x,i)=>`<tr><td>${i+4}</td><td><div class="pf">${avatar(x)}<b>${esc(x.name)}</b></div></td><td>${esc(x.team||"-")}</td><td>${esc(x.comp)}</td><td>${(+x.pts).toLocaleString("id-ID")}</td></tr>`).join("");
+ return `<section class="s"><div class="wrap"><h2>Kompetisi</h2><p class="sub">Daftarkan dirimu pada kompetisi cyber security yang sedang berlangsung.</p><div class="grid">${cards||'<div class="card">Belum ada kompetisi.</div>'}</div></div></section>
+ <section class="s" style="padding-top:0"><div class="wrap"><h2>Top Pemenang</h2><p class="sub">Peserta terbaik, ditampilkan dari akun Google mereka.</p>${w.length?`<div class="podium">${pod}</div>${rest?`<div class="sc"><table><tr><th>#</th><th>Peserta</th><th>Tim</th><th>Kompetisi</th><th>Poin</th></tr>${rest}</table></div>`:""}`:`<div class="card empty">${ic("trophy")}<p style="margin-top:8px">Belum ada pemenang. Admin akan menetapkannya setelah kompetisi selesai.</p></div>`}</div></section>`;
+}
+
+/* ---------- learning ---------- */
+function vLearn(){
+ if(!U)return loginCard("Masuk dengan Google untuk mengakses pusat belajar.");
+ const p=me(),lv=Math.floor(p.xp/100)+1,into=p.xp%100;
+ return `<section class="s"><div class="wrap"><div class="card prof">${avatar(U)}<div class="lvl"><h3 style="margin:0">${esc(U.name)}</h3><div style="color:var(--mut);font-size:13px;margin-bottom:6px">Level ${lv} · ${into}/100 XP ke level berikutnya</div><div class="bar" style="margin:0"><i style="width:${into}%"></i></div></div>
+ <div class="pst"><div><b>${ic("star")}${p.xp}</b><span>Total XP</span></div><div><b>${ic("flame")}${p.streak}</b><span>Hari beruntun</span></div><div><b>${ic("ok")}${Object.keys(p.done).length}</b><span>Selesai</span></div></div></div>
+ <h2 style="margin-top:34px">Kursus</h2><p class="sub">Belajar dengan menulis kode sungguhan. Setiap pelajaran memberi XP.</p><div class="grid">${COURSES.map(c=>{const d=cdone(c);return `<a href="#learn-${c.id}" class="card" style="display:block"><div class="row" style="justify-content:space-between;align-items:center"><div class="ic" style="margin:0">${ic(c.icon)}</div><span class="badge b-soon">${c.level}</span></div><h3 style="margin-top:14px">${c.t}</h3><p>${c.d}</p><div style="display:flex;justify-content:space-between;font-size:13px;color:var(--mut);margin-top:14px"><span>${c.lessons.length} pelajaran</span><b>${d}/${c.lessons.length}</b></div><div class="bar" style="margin-bottom:0"><i style="width:${d/c.lessons.length*100}%"></i></div></a>`}).join("")}</div></div></section>`;
+}
+function vCourse(id){
+ if(!U)return loginCard("Masuk dengan Google untuk mengakses pusat belajar.");
+ const c=course(id);if(!c)return vLearn();const p=me();
+ return `<section class="s"><div class="wrap" style="max-width:820px"><div class="crumb"><a href="#learn">Belajar</a>${ic("arr")}<span>${c.t}</span></div><div class="ic">${ic(c.icon)}</div><h2>${c.t}</h2><p class="sub">${c.d}</p><div class="lessons">${c.lessons.map((l,i)=>`<a class="les ${p.done[c.id+"-"+i]?"d":""}" href="#learn-${c.id}-${i}"><span class="n">${p.done[c.id+"-"+i]?ic("ok").replace('class="i"','class="i" style="width:16px;height:16px"'):i+1}</span><b>${l.t}</b><small>+${l.xp} XP</small>${ic("arr")}</a>`).join("")}</div></div></section>`;
+}
+let cur={};
+function vLesson(id,i){
+ if(!U)return loginCard("Masuk dengan Google untuk mengakses pusat belajar.");
+ const c=course(id),l=c&&c.lessons[i];if(!l)return vLearn();
+ cur={id,i,code:l.starter||"",sel:-1};
+ const quiz=c.lang==="quiz",done=me().done[id+"-"+i],next=i+1<c.lessons.length?`#learn-${id}-${i+1}`:`#learn-${id}`;
+ const left=`<div class="pane"><div class="in"><div class="crumb"><a href="#learn">Belajar</a>${ic("arr")}<a href="#learn-${id}">${c.t}</a>${ic("arr")}<span>${i+1}/${c.lessons.length}</span></div><span class="badge b-soon" style="margin-bottom:10px">+${l.xp} XP</span><h1>${l.t}</h1>${l.body}
+ ${quiz?`<div class="task"><b>${ic("flag")}Pertanyaan</b>${l.q}</div><div id="opts">${l.opts.map((o,k)=>`<div class="opt" id="o${k}" onclick="pick(${k})"><input type="radio" name="q" id="r${k}"><span>${o}</span></div>`).join("")}</div>`:`<div class="task"><b>${ic("flag")}Tantangan</b>${l.task}</div><div class="row"><button class="btn ghost sm" onclick="hint()">${ic("bulb")}Petunjuk</button><button class="btn ghost sm" onclick="sol()">Lihat jawaban</button></div><div id="hint" style="margin-top:10px;color:var(--mut);font-size:14px"></div>`}</div></div>`;
+ const right=quiz?`<div class="pane"><div class="in"><button class="btn" onclick="checkQuiz()">${ic("ok")}Periksa jawaban</button><div id="res" style="margin-top:14px"></div></div></div>`:
+ `<div class="pane"><div class="eh"><span class="dots"><i></i><i></i><i></i></span><span>${c.lang==="html"?"index.html":c.lang==="python"?"main.py":"script.js"}</span><button class="btn ghost sm" style="margin-left:auto;color:#8fa3d6;border-color:#32407a" onclick="resetCode()">${ic("rst")}Reset</button></div>
+ <textarea id="ed" spellcheck="false" autocapitalize="off" autocomplete="off">${esc(cur.code)}</textarea>
+ <div class="eb"><button class="btn sm" onclick="run(false)">${ic("play")}Jalankan</button><button class="btn ok sm" onclick="run(true)">${ic("ok")}Periksa</button></div>
+ ${c.lang==="html"?'<iframe id="pv" sandbox title="Pratinjau"></iframe>':'<pre id="out">Tekan Jalankan untuk melihat output.</pre>'}<div id="res"></div></div>`;
+ return `<section class="s" style="padding-top:28px"><div class="wrap"><div class="lab">${left}${right}</div><div class="row" style="justify-content:space-between;margin-top:18px"><a class="btn ghost sm" href="${i>0?`#learn-${id}-${i-1}`:`#learn-${id}`}">Sebelumnya</a><a class="btn ghost sm ${done?"":"dis"}" id="nx" href="${next}" ${done?"":'style="opacity:.5"'}>Berikutnya${ic("arr")}</a></div></div></section>`;
+}
+function setupLesson(){
+ const ed=document.getElementById("ed");if(!ed)return;
+ ed.addEventListener("input",()=>{cur.code=ed.value;if(course(cur.id).lang==="html")preview()});
+ ed.addEventListener("keydown",e=>{if(e.key==="Tab"){e.preventDefault();const s=ed.selectionStart;ed.value=ed.value.slice(0,s)+"    "+ed.value.slice(ed.selectionEnd);ed.selectionStart=ed.selectionEnd=s+4;cur.code=ed.value}});
+ if(course(cur.id).lang==="html")preview();
+}
+const L=()=>course(cur.id).lessons[cur.i];
+function preview(){const f=document.getElementById("pv");if(f)f.srcdoc=cur.code}
+function hint(){document.getElementById("hint").innerHTML=`<span class="inl">Petunjuk</span> `+esc(L().hint).replace(/\n/g,"<br>")}
+function sol(){if(!confirm("Tampilkan jawaban? XP tetap bisa didapat, tetapi sebaiknya coba dulu sendiri."))return;const ed=document.getElementById("ed");ed.value=L().sol;cur.code=ed.value;preview()}
+function resetCode(){const ed=document.getElementById("ed");ed.value=L().starter||"";cur.code=ed.value;preview()}
+let pyP=null;
+function loadPy(){if(pyP)return pyP;pyP=new Promise((res,rej)=>{const s=document.createElement("script");s.src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";s.onload=()=>loadPyodide().then(res,rej);s.onerror=()=>{pyP=null;rej(new Error("Gagal memuat Python runtime. Periksa koneksi internet."))};document.head.appendChild(s)});return pyP}
+async function runPy(code){const py=await loadPy();let out="";py.setStdout({batched:s=>out+=s+"\n"});py.setStderr({batched:s=>out+=s+"\n"});try{await py.runPythonAsync(code)}catch(e){return{out:String(e.message).trim().split("\n").slice(-3).join("\n"),err:true}}return{out}}
+function runJs(code){const o=[],lg=(...a)=>o.push(a.map(x=>typeof x==="object"?JSON.stringify(x):String(x)).join(" "));try{new Function("console",code)({log:lg,error:lg,warn:lg,info:lg})}catch(e){o.push("Error: "+e.message);return{out:o.join("\n"),err:true}}return{out:o.join("\n")}}
+const norm=s=>String(s).replace(/\r/g,"").split("\n").map(x=>x.trimEnd()).join("\n").trim();
+async function run(check){
+ const c=course(cur.id),l=L(),res=document.getElementById("res"),out=document.getElementById("out");res.innerHTML="";
+ if(c.lang==="html"){preview();if(!check)return;const ok=l.re.every(r=>new RegExp(r,"i").test(cur.code));return verdict(ok,ok?"Benar! Kode HTML kamu sesuai.":"Belum sesuai. Periksa lagi tantangan dan petunjuknya.")}
+ out.className="";out.textContent="Menjalankan…";
+ let r;try{r=c.lang==="python"?await runPy(cur.code):runJs(cur.code)}catch(e){r={out:e.message,err:true}}
+ out.className=r.err?"err":"";out.textContent=r.out||"(tidak ada output)";
+ if(check){const ok=!r.err&&norm(r.out)===norm(l.expect);verdict(ok,ok?"Benar! Output sesuai.":`Belum sesuai. Output yang diharapkan:\n${l.expect}`)}
+}
+function verdict(ok,msg){
+ const res=document.getElementById("res");res.innerHTML=`<div class="res ${ok?"ok":"no"}">${ic(ok?"ok":"x")}<span style="white-space:pre-wrap">${esc(msg)}</span></div>`;
+ if(ok)finish();
+}
+function finish(){
+ const p=me(),k=cur.id+"-"+cur.i,l=L();
+ if(!p.done[k]){p.done[k]=1;p.xp+=l.xp;const t=day(0);if(p.last!==t){p.streak=p.last===day(-1)?p.streak+1:1;p.last=t}saveLP();toast("+"+l.xp+" XP")}
+ const nx=document.getElementById("nx");if(nx){nx.style.opacity=1}
+ document.getElementById("res").insertAdjacentHTML("beforeend",`<div style="padding:12px 14px"><a class="btn sm" href="${nx.getAttribute("href")}">Lanjut${ic("arr")}</a></div>`);
+}
+function pick(k){cur.sel=k;document.querySelectorAll(".opt").forEach((e,j)=>{e.className="opt"+(j===k?" sel":"")});document.getElementById("r"+k).checked=true}
+function checkQuiz(){
+ const l=L();if(cur.sel<0)return toast("Pilih satu jawaban");
+ const ok=cur.sel===l.ans;document.getElementById("o"+l.ans).classList.add("good");if(!ok)document.getElementById("o"+cur.sel).classList.add("bad");
+ verdict(ok,(ok?"Benar! ":"Kurang tepat. ")+l.why);
+}
+
+/* ---------- registration ---------- */
+function regOpen(id){
+ if(!U){location.hash="#login";return}
+ const c=S.comps.find(x=>x.id===id);
+ document.getElementById("modal").innerHTML=`<div class="modal"><div class="card"><h3>Daftar: ${esc(c.name)}</h3><p style="margin-bottom:14px">Masuk sebagai ${esc(U.email)}</p><label class="l">Nama tim / alias</label><input type="text" id="tm" placeholder="Contoh: Null Pointers" maxlength="40"><div class="row" style="margin-top:18px"><button class="btn" onclick="regDo('${id}')">${ic("ok")}Konfirmasi</button><button class="btn ghost" onclick="document.getElementById('modal').innerHTML=''">Batal</button></div></div></div>`;
+}
+function regDo(id){
+ const c=S.comps.find(x=>x.id===id),t=document.getElementById("tm").value.trim();
+ if(!t)return toast("Isi nama tim");
+ if(status(c)[0]!=="open")return toast("Pendaftaran tidak tersedia");
+ S.regs.push({cid:id,email:U.email,name:U.name,picture:U.picture,team:t,ts:Date.now()});save();
+ document.getElementById("modal").innerHTML="";toast("Pendaftaran berhasil");render();
+}
+
+/* ---------- admin ---------- */
+let tab="comps",pickU="";
+function vAdmin(){
+ if(!isAdmin())return loginCard("Halaman ini khusus admin. Masuk dengan akun admin.");
+ const T=(k,l)=>`<button class="btn ${tab===k?"":"ghost"} sm" onclick="tab='${k}';render()">${l}</button>`;
+ let b="";
+ if(tab==="comps")b=S.comps.map((c,i)=>`<div class="card" style="margin-bottom:14px"><div class="row" style="justify-content:space-between;align-items:center"><b>${esc(c.name)}</b><span class="badge b-${status(c)[0]}">${status(c)[1]} · ${regCount(c.id)}/${c.quota}</span></div>
+ <div class="f"><div><label class="l">Nama</label><input type="text" value="${esc(c.name)}" onchange="ed('comps',${i},'name',this.value)"></div><div><label class="l">Hadiah</label><input type="text" value="${esc(c.prize)}" onchange="ed('comps',${i},'prize',this.value)"></div></div>
+ <div class="f"><div style="grid-column:1/-1"><label class="l">Deskripsi</label><textarea rows="2" onchange="ed('comps',${i},'desc',this.value)">${esc(c.desc)}</textarea></div></div>
+ <div class="f"><div><label class="l">Tanggal buka</label><input type="date" value="${c.open}" onchange="ed('comps',${i},'open',this.value)"></div><div><label class="l">Tanggal tutup</label><input type="date" value="${c.close}" onchange="ed('comps',${i},'close',this.value)"></div><div><label class="l">Kuota</label><input type="number" min="0" value="${c.quota}" onchange="ed('comps',${i},'quota',+this.value)"></div>
+ <div><label class="l">Status manual</label><select onchange="ed('comps',${i},'mode',this.value)">${[["auto","Otomatis (tanggal & kuota)"],["open","Paksa dibuka"],["closed","Paksa ditutup"]].map(o=>`<option value="${o[0]}" ${c.mode===o[0]?"selected":""}>${o[1]}</option>`).join("")}</select></div></div>
+ <div class="row" style="margin-top:14px"><button class="btn red sm" onclick="rm('comps',${i})">${ic("del")}Hapus</button></div></div>`).join("")+`<button class="btn" onclick="S.comps.push({id:'c'+Date.now(),name:'Kompetisi Baru',desc:'Deskripsi kompetisi.',open:day(0),close:day(30),quota:100,mode:'auto',prize:'Rp 0'});save();render()">${ic("plus")}Tambah kompetisi</button>`;
+ if(tab==="win"){
+  const taken=new Set(S.winners.map(w=>w.email)),avail=S.users.filter(u=>!taken.has(u.email));
+  b=(S.winners.length?S.winners.map((w,i)=>`<div class="card" style="margin-bottom:12px"><div class="row" style="align-items:center;margin-bottom:8px"><span class="pf" style="display:flex;gap:10px;align-items:center">${avatar(w)}<span><b>#${i+1} ${esc(w.name)}</b><br><small style="color:var(--mut)">${esc(w.email)}</small></span></span></div><div class="f" style="margin-top:0"><div><label class="l">Kompetisi</label><select onchange="ed('winners',${i},'comp',this.value)">${S.comps.map(c=>`<option ${w.comp===c.name?"selected":""}>${esc(c.name)}</option>`).join("")}</select></div><div><label class="l">Tim</label><input type="text" value="${esc(w.team||"")}" onchange="ed('winners',${i},'team',this.value)"></div><div><label class="l">Poin</label><input type="number" value="${w.pts}" onchange="ed('winners',${i},'pts',+this.value)"></div></div><div class="row" style="margin-top:12px"><button class="btn ghost sm" onclick="mv(${i},-1)">Naik</button><button class="btn ghost sm" onclick="mv(${i},1)">Turun</button><button class="btn red sm" onclick="rm('winners',${i})">${ic("del")}Hapus</button></div></div>`).join(""):`<div class="card empty" style="margin-bottom:14px">Belum ada pemenang.</div>`)
+  +`<div class="card"><label class="l">Tambah pemenang dari akun Google yang pernah login</label>${avail.length?`<div class="row"><select id="pu" style="flex:1;min-width:200px">${avail.map(u=>`<option value="${esc(u.email)}">${esc(u.name)} (${esc(u.email)})</option>`).join("")}</select><button class="btn" onclick="addWin()">${ic("plus")}Tambah</button></div>`:`<p>Belum ada akun lain yang tersedia. Akun muncul di sini setelah login dengan Google.</p>`}</div>`+(S.winners.length>1?`<div style="margin-top:14px"><button class="btn ghost" onclick="S.winners.sort((a,b)=>b.pts-a.pts);save();render()">Urutkan berdasarkan poin</button></div>`:"");
+ }
+ if(tab==="regs")b=S.regs.length?`<div class="sc"><table><tr><th>Peserta</th><th>Email</th><th>Tim</th><th>Kompetisi</th></tr>${S.regs.map(r=>`<tr><td><div class="pf">${avatar(r)}${esc(r.name)}</div></td><td>${esc(r.email)}</td><td>${esc(r.team)}</td><td>${esc((S.comps.find(c=>c.id===r.cid)||{}).name||"-")}</td></tr>`).join("")}</table></div>`:`<div class="card empty">Belum ada pendaftar.</div>`;
+ return `<section class="s"><div class="wrap"><h2>Panel Admin</h2><p class="sub">Atur kompetisi, jadwal pendaftaran, kuota, dan top pemenang.</p><div class="tabs">${T("comps","Kompetisi")}${T("win","Top Pemenang")}${T("regs","Pendaftar ("+S.regs.length+")")}</div>${b}</div></section>`;
+}
+function addWin(){
+ const e=document.getElementById("pu").value,u=S.users.find(x=>x.email===e);if(!u)return;
+ const r=[...S.regs].reverse().find(x=>x.email===e);
+ S.winners.push({email:u.email,name:u.name,picture:u.picture,team:r?r.team:"",pts:0,comp:r?(S.comps.find(c=>c.id===r.cid)||{}).name||S.comps[0].name:(S.comps[0]||{}).name||""});save();render();
+}
+function ed(a,i,k,v){S[a][i][k]=v;save();render()}
+function rm(a,i){if(confirm("Hapus item ini?")){S[a].splice(i,1);save();render()}}
+function mv(i,d){const j=i+d;if(j<0||j>=S.winners.length)return;[S.winners[i],S.winners[j]]=[S.winners[j],S.winners[i]];save();render()}
+
+function render(){
+ head();const r=route(),p=r.split("-");let h;
+ if(p[0]==="competition")h=vComp();
+ else if(p[0]==="learn")h=p[2]!==undefined?vLesson(p[1],+p[2]):p[1]?vCourse(p[1]):vLearn();
+ else if(p[0]==="admin")h=vAdmin();
+ else if(p[0]==="login")h=U?vHome():loginCard();
+ else h=vHome();
+ document.getElementById("app").innerHTML=h;
+ mountButtons();setupLesson();
+}
+window.addEventListener("hashchange",()=>{render();scrollTo(0,0)});
+render();
+</script>
+</body>
+</html>
